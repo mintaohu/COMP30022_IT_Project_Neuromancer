@@ -1,0 +1,22 @@
+{
+  "name": "comp30022_it_project_neuromancer",
+  "version": "1.0.0",
+  "description": "A personal CRM calender",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mintaohu/COMP30022_IT_Project_Neuromancer.git"
+  },
+  "author": "Neuromancer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mintaohu/COMP30022_IT_Project_Neuromancer/issues"
+  },
+  "homepage": "https://github.com/mintaohu/COMP30022_IT_Project_Neuromancer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
