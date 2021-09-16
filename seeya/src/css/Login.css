@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'JosefinSans';
+    src: url(../Josefin_Sans/JosefinSans-VariableFont_wght.ttf);
+}
+
 hr{
     border: 2px solid black; 
 }
@@ -44,11 +49,19 @@ hr{
 }
 
 .Login_back{
+    display: flex;
     position: absolute;
-    font-size: 27px;
+    font-size: 25px;
     margin-left: -8%;
-    margin-top: -8%;
+    margin-top: -10%;
     color: black;
+    font-family: "JosefinSans", sans-serif;
+}
+
+.back_word{
+    padding: 10px;
+    font-weight: 800;
+    margin-top: 30%;
 }
 
 .Login_tag{
@@ -64,7 +77,8 @@ hr{
 
 .Login_nametag{
     margin-top: 10%;
-    font-size: 17px;
+    font-size: 20px;
+    font-family: "JosefinSans", sans-serif;
 }
 
 .Login_title{
@@ -73,7 +87,8 @@ hr{
     font-weight: 500;
     margin-top: 2%;
     margin-bottom: 1%;
-    font-size: 17px;
+    font-size: 20px;
+    font-family: "JosefinSans", sans-serif;
 }
 
 .Login_email{
@@ -92,7 +107,7 @@ hr{
 }
 
 .Login_getPassword{
-    margin-right: 10%;
+    margin-right: 5%;
     color: black;
 }
 
@@ -103,8 +118,9 @@ hr{
 .Login_hint{
     margin-top: 4%;
     margin-bottom: 4%;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
+    font-family: "JosefinSans", sans-serif;
 }
 .Login_confirm{
     background-color: black;
@@ -112,6 +128,8 @@ hr{
     width: 82%;
     height: 45px;
     border-radius: 15px;
-    font-size: 17px;
+    font-size: 20px;
     margin-bottom: 2%;
+    font-family: "JosefinSans", sans-serif;
+    font-weight: 300;
 }

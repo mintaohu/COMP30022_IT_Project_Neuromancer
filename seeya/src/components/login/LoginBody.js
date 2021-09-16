@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
-
-import { login } from "../../api/login.js";
+import { NavLink} from "react-router-dom";
+import backArrow from '../../images/yanni/arrow-left.svg'
 
 function LoginBody() {
     const [email, setEmail] = useState("");
@@ -10,10 +9,12 @@ function LoginBody() {
     return (
         <div className="Login_body">
             <NavLink style={{textDecoration: 'none' }} to="/" className="Login_back">
-                Back
+                <img src = {backArrow} alt = "back arrow" className = "backArrow"></img>
+                <p className="back_word"> Back</p>
             </NavLink>
             <div className="Background_div" />
-            <form onSubmit={() => { login(email, password); }}>
+            {/*TODO: Check email and password*/}
+            <form onSubmit={() => {  }}>
                 <div className="Login_log_form">
                     <div className="Login_tag">
                         <p className="Login_nametag">Login</p>
