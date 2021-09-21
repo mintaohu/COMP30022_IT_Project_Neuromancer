@@ -1,7 +1,7 @@
 import React from "react";
 import LoginHeader from '../components/login/LoginHeader.js'
 import LoginBody from '../components/login/LoginBody.js'
-import "../css/Login.css";
+import "../css/login.css";
 
 function Login() {
 

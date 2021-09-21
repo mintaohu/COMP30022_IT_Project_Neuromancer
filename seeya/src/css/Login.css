@@ -132,4 +132,5 @@ hr{
     margin-bottom: 2%;
     font-family: "JosefinSans", sans-serif;
     font-weight: 300;
+    cursor: pointer;
 }

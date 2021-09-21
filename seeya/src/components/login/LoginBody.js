@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import backArrow from '../../images/yanni/arrow-left.svg'
 
 function LoginBody() {

@@ -1,0 +1,150 @@
+@font-face {
+    font-family: 'JosefinSans';
+    src: url(../Josefin_Sans/JosefinSans-VariableFont_wght.ttf);
+}
+
+.Add_event{
+    background-image: url("../images/yanni/register-background.svg");
+    background-size: 100%;
+    background-position: 50% 70%;
+    height: 420px;
+    padding: 10%;
+}
+
+.Agenda_form{
+    position: relative;
+    text-align: center;
+    border: 2px solid black;
+    width: 40%;
+    height: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: -1%;
+    background-color: white;
+    border-radius: 7px;
+}
+
+.general_title{
+    text-align: left;
+    margin-left: 10%;
+    font-weight: 500;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    font-size: 20px;
+}
+
+.what_form{
+    width: 80%;
+    height: 35px;
+    margin-top: 5px;
+    border-radius: 15px;
+    margin-bottom: 2%;
+    font-size: large;
+}
+
+input:focus{
+    outline: none;
+}
+
+textarea:focus{
+    outline: none;
+}
+
+.date_form{
+    width: 80%;
+    height: 45px;
+    margin-top: 5px;
+    border-radius: 15px;
+    margin-bottom: 2%;
+    border: 2px solid black;
+    text-align: left;
+    font-size: large;
+}
+
+.react-date-picker__wrapper{
+    border: none;
+}
+
+.details_form{
+    width: 80%;
+    height: 300px;
+    margin-top: 5px;
+    border-radius: 15px;
+    margin-bottom: 2%;
+    margin-left: 10px;
+    border: 2px solid black;
+    font-size: large;
+}
+
+.iconbutton{
+    text-align: left;
+    border: none;
+    margin-left: 10%;
+    font-size: 25px;
+    margin-top: 1%;
+    border-radius: 5px;
+}
+
+.privacybutton{
+    padding: 10px 60px;
+    font-size: 20px;
+    margin-left: 10%;
+    border-radius: 15px;
+}
+.agenda_confirm{
+    background-color: black;
+    color: white;
+    width: 82%;
+    height: 45px;
+    border-radius: 15px;
+    font-size: 20px;
+    margin-bottom: 2%;
+    font-family: "JosefinSans", sans-serif;
+    font-weight: 300;
+    margin-left: 1%;
+    margin-top: 10%;
+    cursor: pointer;
+}
+
+.agenda_background_div{
+    width: 34%;
+    height: 1130px;
+    position: absolute;
+    margin-top: -2.5%;
+    margin-left: 25%;
+    background-color: white;
+    border-radius: 7px;
+    border: 2px solid black;
+}
+
+.newagenda_tag{
+    position: absolute;
+    margin-left: -20%;
+    margin-top: -9%;
+    background-color: black;
+    color: white;
+    width: 35%;
+    height: 50px;
+    border-radius: 15px;
+}
+
+.newagenda_nametag{
+    margin-top: 5%;
+    font-size: 20px;
+}
+
+.navibutton{
+    background-color: black;
+    color: white;
+    margin: 10px;
+    padding: 10px 30px;
+    font-size: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.navi_div{
+    margin-left: 75%;
+    margin-top: -4%;
+    margin-bottom: 1%;
+}
