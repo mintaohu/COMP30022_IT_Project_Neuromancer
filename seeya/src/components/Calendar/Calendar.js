@@ -10,10 +10,18 @@ function Calender() {
     const [info, setInfo] = useState([]);
 
     /* display event info when click */
-    function renderEventContent(eventInfo) {
-        setInfo(eventInfo.event.title);
+    function renderEvent(eventInfo) {
+        setInfo(eventInfo.event.extendedProps.icon);
     }
-      
+    
+    function renderEventContent(eventInfo) {
+        return (
+          <div>
+            {eventInfo.event.extendedProps.icon}
+          </div>
+        )
+    }
+
     return (
         <section>
             <div className="calender_case">
@@ -22,13 +30,14 @@ function Calender() {
                         plugins={[ dayGridPlugin, interactionPlugin ]}
                         initialView="dayGridMonth"
                         events={events}
+                        eventContent= {renderEventContent}
                         /* after implement form to add event then dont need to create event function */
                         /* (async function to create event)
                         eventAdd={event=>handleEventAdd(event)}
                         (get event from database)
                         datesSet={date=>handleDatesSet(date)}
                         */
-                        eventClick={renderEventContent}
+                        eventClick={renderEvent}
                         headerToolbar={{start: 'prev', center: 'title', end: 'next'}}
                     />
                 </div>
