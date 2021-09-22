@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DatePicker from 'react-date-picker';
 import { NavLink } from "react-router-dom";
 import backArrow from '../../images/yanni/arrow-left.svg'
+import DateTimePicker from 'react-datetime-picker';
 
 const Button = styled.button
     `background-color: white;
@@ -63,13 +63,11 @@ function AddEvents({isOpen, onClose, onEventAdded}) {
                     <div className="general_title">
                         <label htmlFor="start">When</label>
                     </div>
-                    <DatePicker
+                    <DateTimePicker
                             className="date_form"
-                            dateFormat="YYYY-MM-DD"
-                            timeFormat={false}
                             value={start}
                             onChange={date => setStart(date)}
-                        />
+                    />
                     <div className="general_title">
                         <label htmlFor="where">Where</label>
                     </div>
