@@ -1,6 +1,6 @@
 // connect to Mongoose model
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const encryption = require('../utils/encryption')
 const {User, UserSchema} = require('../models/user.js')
 
 

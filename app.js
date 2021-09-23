@@ -1,5 +1,5 @@
 const express = require('express')
-const { Account } = require('./models/account.js')
+//const { Account } = require('./models/account.js')
 const { User } = require('./models/user.js')
 const app = express()
 
