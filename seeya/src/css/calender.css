@@ -1,3 +1,14 @@
+.calender_color{
+  width: 40%;
+  height: 635px;
+  margin-left: 29%;
+  margin-top: -20px;
+  border: 20px solid rgb(218, 250, 220);
+  border-radius: 50px;
+  position: absolute;
+  z-index: -5;
+}
+
 .calender_case{
   width: 40%;
   height: 630px;
@@ -5,13 +16,17 @@
   margin-top: 60px;
   border: 3px solid black;
   border-radius: 30px;
+  background-color: white;
 }
+
 .calender{
   width: 90%;
   height: 80%;
   margin: auto;
-  border: none
+  border: none;
+  background-color: white;
 }
+
 :root {
   --fc-daygrid-event-dot-width: 8px;
 }
@@ -200,7 +215,7 @@
   white-space: nowrap;
   border-radius: 3px; /* dot event needs this to when selected */
   font-size: .85em;
-  font-size: var(--fc-small-font-size, .85em);
+  font-size: 15px;
 }
 /* --- the rectangle ("block") style of event --- */
 .fc-daygrid-block-event .fc-event-time {
@@ -310,4 +325,17 @@
 
 .fc .fc-scrollgrid{
   border-left-width: 0;
+}
+
+.fc-h-event .fc-event-main{
+  background-color: white;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{
+  flex-direction: row;
+  display: flex;
+}
+
+.fc-h-event{
+  border: none;
 }

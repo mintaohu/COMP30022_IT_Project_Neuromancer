@@ -32,7 +32,7 @@ function AddEvents({isOpen, onClose, onEventAdded}) {
 
     return (
         <div className="Add_event">
-            <NavLink style={{textDecoration: 'none' }} to="/" className="Login_back">
+            <NavLink style={{textDecoration: 'none' }} to="/home" className="Login_back">
                 <img src = {backArrow} alt = "back arrow" className = "backArrow"></img>
                 <p className="back_word"> Back</p>
             </NavLink>

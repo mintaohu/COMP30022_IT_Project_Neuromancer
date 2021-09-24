@@ -4,10 +4,10 @@
 }
 
 .Add_event{
-    background-image: url("../images/yanni/register-background.svg");
+    background-image: url("../images/addNewAgendaBackground.svg");
     background-size: 100%;
-    background-position: 50% 70%;
-    height: 420px;
+    background-position: 50% -250px;
+    height: 1500px;
     padding: 10%;
 }
 
