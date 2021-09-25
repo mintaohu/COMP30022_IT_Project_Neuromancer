@@ -7,7 +7,7 @@ const userRouter = express.Router()
 const userController = require('../controllers/userController.js')
 
 // process routes by calling controller functions
-userRouter.get('/', (req, res) => userController.getAllUsers(req, res))
+userRouter.get('/test', (req, res) => userController.getAllUsers(req, res))
 
 
 // export the router
