@@ -1,13 +1,14 @@
 import react from 'react'
 import backArrow from '../../images/yanni/arrow-left.svg'
+import { NavLink} from "react-router-dom";
 
 function RegisterBody(){
     return(
         <div className = "registerBody">
-            <div className = "backButton">
+            <NavLink style={{textDecoration:'none' }} to="/" className = "backButton">
                 <img src = {backArrow} alt = "back arrow" className = "backArrow"></img>
-                <span>Back</span>
-            </div>
+                <span style={{color:'black' }}>Back</span>
+            </NavLink>
 
             <div className = "registerMain">
                 <form action="#" method="post">
