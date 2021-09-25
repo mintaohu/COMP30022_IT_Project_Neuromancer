@@ -7,6 +7,8 @@ import Home from "./pages/home";
 import AddAgenda from "./pages/AddAgenda.js";
 import Login from "./pages/login.js";
 import Homepage from "./pages/homepage.js";
+import Test from "./pages/test.js";
+import Profile from "./pages/profile.js";
 
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        {/* homepage */}
+        {/* homepage before login*/}
         <Route exact path="/">
           <Homepage />
         </Route>
@@ -38,7 +40,17 @@ function App() {
         <Route exact path="/addAgenda">
           <AddAgenda />
         </Route>
+
+        {/* for test */}
+        <Route exact path="/test">
+          <Test />
+        </Route>
       
+        {/* account profile */}
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
+
       </Switch>
     </Router>
 
