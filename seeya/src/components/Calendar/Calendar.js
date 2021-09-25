@@ -50,11 +50,11 @@ function Calender() {
         )
     }
 
-    function detailsMessgaeHandler(){
+    function detailsMessageHandler(){
         setDetailIsOpen(true);
     }
 
-    function closeDetailsMessgaeHandler(){
+    function closeDetailsMessageHandler(){
         setDetailIsOpen(false);
     }
 
@@ -86,12 +86,12 @@ function Calender() {
                     <hr className="recent_agenda_header"/>
                 </div>
                 <div className="agenda_content">
-                    <p className="content" onClick={detailsMessgaeHandler}>{date}</p>
-                    <p className="content" onClick={detailsMessgaeHandler}style={{marginTop: '5%'}}>{info}</p>
+                    <p className="content" onClick={detailsMessageHandler}>{date}</p>
+                    <p className="content" onClick={detailsMessageHandler}style={{marginTop: '5%'}}>{info}</p>
                     { active ? <img src={minus} className="minus_icon" alt="Minus"></img> : null }
                     { active ? <img src={edit} className="draw_icon" alt="Edit"></img> : null }
                     {detailIsOpen ? <EventDetails address={address} details={details}/> : null }
-                    {detailIsOpen ? <Backdrop onClick={closeDetailsMessgaeHandler}/> : null }
+                    {detailIsOpen ? <Backdrop onClick={closeDetailsMessageHandler}/> : null }
                 </div>
                 { active ? null : <NavLink to="/addAgenda" className="addAgenda">
                     <button className="recent_agenda_button">Add New Agenda</button>
