@@ -2,7 +2,7 @@ import backArrow from '../../images/yanni/arrow-left.svg'
 import userPhoto from '../../images/yanni/userPhoto.svg'
 import { NavLink} from "react-router-dom";
 
-function ProfileBody(){
+function ProfileEditForm(){
     return(
         <div className = "profileBody">
             <NavLink style={{textDecoration:'none' }} to="/" className = "backButton">
@@ -12,9 +12,8 @@ function ProfileBody(){
 
             <p className="profileNametag">My Account</p>
 
-            
             <div className = "profileMain">
-                <div>
+                <form action="#" method="post">
                     <div className="profileForm">
                         <div style={{textAlign:"center"}}>
                             <img src={userPhoto} alt="user's selfie" style={{height: "10rem", width: "10rem", margin:"1rem 1rem"}}></img>
@@ -23,48 +22,47 @@ function ProfileBody(){
                         {/*TODO: Save these information*/}
                         <div className="inputPair">
                             <label htmlFor="email" className="profileTitle">Email</label>
-                            <div className="profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                            <input type="text" id="username" className="profileInput" />
                         </div>
                         
                         <div className="inputPair">
                             <label htmlFor="fullName" className="profileTitle">Full Name</label>
-                            <div className="profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                            <input type="text" name="username" id="fullName" className="profileInput" />
                         </div>
                         
                         <div className="inputPair">
                             <label htmlFor="fullName" className="profileTitle">Self Introduction</label>
-                            <div className="profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                            <input type="text" id="fullName" className="profileInput" />
                         </div>
                         
                         <div className="inputPair">
                             <label htmlFor="phoneNum" className="profileTitle">Phone Number</label>
-                            <div className="profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                            <input type="number" id="phoneNum" className="profileInput" />
                         </div>               
 
                         <div className="inputPair">
                             <label htmlFor="fullName" className="profileTitle">Address</label>
-                            <div className="profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                            <input type="text" id="address" className="profileInput" />
                         </div>
 
                         <div className = "alignForm">
                             <div className = "alignContent">
                                 <div className="profileTitle"><label htmlFor="age">Age</label></div>
-                                <div className = "profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                                <div><input type="number" name="username" id="age" className = "profileInput" /></div>
                             </div>
                             <div className = "alignContent">
                                 <div className="profileTitle"><label htmlFor="gender">Gender</label></div>
-                                <div className = "profileInput" style={{border:"1px black solid", borderRadius:"1rem"}} />
+                                <div><input type="text" name="username" id="gender" className = "profileInput" /></div>
                             </div>
                         </div>
 
-                        {/*TODO: Click button then create a new account and dump to memu page*/}
-                        <div className="inputPair"><NavLink to="/profile-edit" id="button" className="profileButton">Edit Profile</NavLink></div>
+                        {/*TODO: save information function, log out function*/}
+                        <div className="inputPair"><NavLink to="/profile" id="button" className="profileButton">Save Information</NavLink></div>
                         <div className="inputPair"><NavLink to="/" id="button" className="profileButton" style={{backgroundColor:"#FF7B7B"}}>Log out</NavLink></div>
                     </div>
-                </div>
+                </form>
             </div>
-
             <div className="profileBack" />
         </div>
     )
-}export default ProfileBody;
+}export default ProfileEditForm;

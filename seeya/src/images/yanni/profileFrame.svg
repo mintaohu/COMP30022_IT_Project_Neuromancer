@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="826" height="1330" viewBox="0 0 826 1330">
+  <g id="组_45" data-name="组 45" transform="translate(-520 -309)">
+    <g id="矩形_25" data-name="矩形 25" transform="translate(645 315)" fill="#fff" stroke="#000" stroke-width="2">
+      <rect width="701" height="1281" rx="11" stroke="none"/>
+      <rect x="1" y="1" width="699" height="1279" rx="10" fill="none"/>
+    </g>
+    <g id="矩形_10" data-name="矩形 10" transform="translate(610 341)" fill="#fff" stroke="#000" stroke-width="2">
+      <rect width="701" height="1298" rx="11" stroke="none"/>
+      <rect x="1" y="1" width="699" height="1296" rx="10" fill="none"/>
+    </g>
+    <g id="组_2" data-name="组 2" transform="translate(-1213 261)">
+      <rect id="矩形_1" data-name="矩形 1" width="181" height="64" rx="23" transform="translate(1733 48)" fill="#0d0d0d"/>
+      <text id="My_account" data-name="My account" transform="translate(1758 86)" fill="#fff" font-size="24" font-family="LucidaGrande, Lucida Grande"><tspan x="0" y="0">My</tspan><tspan y="0" font-family="Baghdad"> </tspan><tspan y="0">account</tspan></text>
+    </g>
+  </g>
+</svg>

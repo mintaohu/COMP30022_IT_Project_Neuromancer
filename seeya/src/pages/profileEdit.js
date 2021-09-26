@@ -1,13 +1,13 @@
 import ProfileHeader from "../components/profile/profileHeader";
-import ProfileBody from "../components/profile/profileBody";
+import ProfileEditForm from "../components/profile/profileEdit";
 import "../css/profile.css";
 
 
-function Profile(){
+function ProfileEdit(){
     return(
         <div className="profilePage">
             <ProfileHeader />
-            <ProfileBody />
+            <ProfileEditForm />
         </div>
     )
-}export default Profile;
+}export default ProfileEdit;

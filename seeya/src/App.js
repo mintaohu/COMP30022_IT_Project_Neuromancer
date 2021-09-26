@@ -9,6 +9,7 @@ import Login from "./pages/login.js";
 import Homepage from "./pages/homepage.js";
 import Test from "./pages/test.js";
 import Profile from "./pages/profile.js";
+import ProfileEdit from "./pages/profileEdit.js";
 
 
 function App() {
@@ -49,6 +50,11 @@ function App() {
         {/* account profile */}
         <Route exact path="/profile">
           <Profile />
+        </Route>
+
+        {/* account profile */}
+        <Route exact path="/profile-edit">
+          <ProfileEdit />
         </Route>
 
       </Switch>
