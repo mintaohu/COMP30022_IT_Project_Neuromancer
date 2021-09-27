@@ -1,5 +1,9 @@
 const express = require('express')
+<<<<<<< HEAD
 const { Account } = require('./models/account.js')
+=======
+//const { Account } = require('./models/account.js')
+>>>>>>> backend
 const { User } = require('./models/user.js')
 const app = express()
 
@@ -60,4 +64,8 @@ app.all('*', (req, res) => {  // 'default' route to catch user errors
 // start server and listen for HTTP requests
 app.listen(process.env.PORT || 5000, () => {
   console.log("SeeYa app is listening ...")
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> backend
