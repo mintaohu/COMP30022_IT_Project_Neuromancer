@@ -11,6 +11,9 @@ const UserSchema = new mongoose.Schema({
 	tel: { 
 		type: String, required: false 
 	},
+	password: {
+		type: String, required: true
+	}
 });
 
 const User = mongoose.model("User", UserSchema);

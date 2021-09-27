@@ -20,14 +20,15 @@ mongoose.connect(connectionString,{
 });
 
 
-app.post("/insert", async (req,res)=>{
+app.post("/register", async (req,res)=>{
 
     const name = req.body.name
     const email = req.body.email
     const tel = req.body.tel
+    const password = req.body.password
     
 
-    const user = new UserModel({name: name, email: email, tel: tel})
+    const user = new UserModel({name: name, email: email, tel: tel, password: password})
 
     try {
         await user.save();

@@ -7,14 +7,12 @@ function App() {
   const [name, setName] = useState('')
   const [email,setEmail] = useState('')
   const [tel,setTel] = useState('')
-  const [password, setPassword] = useState('')
 
   const addToList = () =>{
-    Axios.post('http://localhost:5000/register',{
+    Axios.post('http://localhost:5000/insert',{
       name: name,
       email: email,
       tel: tel,
-      password: password
     });
   };
 
@@ -39,12 +37,6 @@ function App() {
         type="text" 
         onChange={(e)=>{
         setTel(e.target.value);
-      }}></input>
-      <label>Password:</label>
-      <input 
-        type="text" 
-        onChange={(e)=>{
-        setPassword(e.target.value);
       }}></input>
 
       <button onClick={addToList}>Add To List</button>
