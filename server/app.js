@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require('express')
 const cors = require('cors')
 const app = express()
 const mongoose = require("mongoose")
@@ -25,8 +25,10 @@ app.post("/insert", async (req,res)=>{
     const name = req.body.name
     const email = req.body.email
     const tel = req.body.tel
+    
 
     const user = new UserModel({name: name, email: email, tel: tel})
+
     try {
         await user.save();
         res.send("inserted data");
