@@ -7,11 +7,8 @@ const userRouter = express.Router()
 const userController = require('../controllers/userController.js')
 
 // process routes by calling controller functions
-<<<<<<< HEAD
-userRouter.get('/', (req, res) => userController.getAllUsers(req, res))
-=======
 userRouter.get('/test', (req, res) => userController.getAllUsers(req, res))
->>>>>>> backend
+
 
 
 // export the router

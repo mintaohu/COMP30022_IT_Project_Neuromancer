@@ -2,11 +2,6 @@ const mongoose = require("mongoose")
 
 
 const UserSchema = new mongoose.Schema({
-<<<<<<< HEAD
-	name: { type: String, required: true },
-	email: { type: String, required: true },
-	tel: { type: String, required: false },
-=======
 
 	// registration information
 	email: { type: String, required: true },
@@ -19,7 +14,7 @@ const UserSchema = new mongoose.Schema({
 	contact: {type: [], required: false},
 	events: {type: [], required: false},
 
->>>>>>> backend
+
 })
 
 const User = mongoose.model("User", UserSchema)
