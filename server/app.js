@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const { userInfo } = require("os")
 const connectionString = "mongodb+srv://xuanjianz:kMlXGvq8u0aLkNMc@testing.wjdf1.mongodb.net/test"
 const UserModel = require("./models/User")
+const encryption = require('./utils/encryption')
 
 // receive information from front-end in json form
 app.use(express.json())
@@ -19,13 +20,41 @@ mongoose.connect(connectionString,{
     console.log('Mongoose connection established')
 });
 
+// const register = async (req, res) =>{
+// 	try {
+// 		foundUser = User.find((data) => req.body.email === data.email)
+// 		if (!foundUser) {
+			
+// 			hashPassword = await bcrypt.hash(req.body.password, 10)
+
+// 			newUser = new User({
+// 				name: req.body.name,
+// 				email: req.body.email,
+// 				password: hashPassword,
+// 				tel: req.body.tel
+// 			})
+
+// 			try {
+// 				await newUser.save()
+// 			} catch (error) {
+// 				res.status(409).json({ message: error.message });
+// 			}
+
+// 			res.send("Account registration is successful")
+// 		} else {
+// 			res.send("Failed: Email has already been used")
+// 		}
+// 	} catch (error) {
+		
+// 	}
+// }
 
 app.post("/register", async (req,res)=>{
-
+    
     const name = req.body.name
     const email = req.body.email
     const tel = req.body.tel
-    const password = req.body.password
+    const password = encryption.encrypt(req.body.password,10)
     
 
     const user = new UserModel({name: name, email: email, tel: tel, password: password})
