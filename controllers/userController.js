@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
 		// we only need names and photos
 		const users = await User.find( {}, {name:true, email:true}).lean()
 		
-		res.send(users)	
+		res.json(users)	
 	} catch (err) {
 		console.log(err)
 	}
