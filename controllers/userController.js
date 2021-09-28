@@ -21,13 +21,14 @@ const register = async (req, res) =>{
 		foundUser = User.find((data) => req.body.email === data.email)
 		if (!foundUser) {
 			
-			hashPassword = await bcrypt.hash(req.body.password, 10)
+			hashPassword = await bcrypt.hash(req.body.pwd, 10)
 
 			newUser = new User({
-				name: req.body.name,
+				name: req.body.username,
 				email: req.body.email,
 				password: hashPassword,
-				tel: req.body.tel
+				age: req.body.age,
+				gender: req.body.gender
 			})
 
 			try {
@@ -41,15 +42,13 @@ const register = async (req, res) =>{
 			res.send("Failed: Email has already been used")
 		}
 	} catch (error) {
-		
+		console.log(err)
 	}
 }
 
-
-
 const loginUser = async (req, res) => {
 	try {
-		foundUser = User.find((data) => req.body.email === data.email)
+		foundUser = User.find((data) => req.params.Email === data.email)
 		if (foundUser) {
 			Password = req.body.password
 			storedPassword = foundUser.password
@@ -68,7 +67,7 @@ const loginUser = async (req, res) => {
 		}
 		
 	} catch (error) {
-		
+		console.log(err)
 	}
 }
 
@@ -76,4 +75,6 @@ const loginUser = async (req, res) => {
 // export the functions
 module.exports = {
 	getAllUsers,
+	register,
+	loginUser
 }
