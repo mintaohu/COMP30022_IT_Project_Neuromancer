@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 
-const AgendaSchema = new mongoose.Schema({
+const agendaSchema = new mongoose.Schema({
 	what: { type: String, required: true },
 	where: { type: String, required: true },
 	when: { type: Date, required: true },
@@ -12,5 +12,5 @@ const AgendaSchema = new mongoose.Schema({
     details: { type: String, required: true },
 })
 
-const Agenda = mongoose.model("Agenda", AgendaSchema)
-module.exports = {Agenda, AgendaSchema}
+const Agenda = mongoose.model("Agenda", agendaSchema)
+module.exports = { Agenda }
