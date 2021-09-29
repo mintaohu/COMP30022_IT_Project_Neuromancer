@@ -4,42 +4,34 @@ import Axios from 'axios'
 
 function App() {
 
-  const [name, setName] = useState('')
   const [email,setEmail] = useState('')
-  const [tel,setTel] = useState('')
+  const [password,setPassword] = useState('')
 
   const addToList = () =>{
-    Axios.post('http://localhost:5000/insert',{
-      name: name,
+    Axios.post('http://localhost:5000/login',{
       email: email,
-      tel: tel,
+      password: password,
     });
   };
 
   return (
     <div className="App">
-      <h1> Seeya Register</h1>
+      <h1> Seeya Login</h1>
 
-      <label>Name:</label>
-      <input 
-        type="text" 
-        onChange={(e)=>{
-        setName(e.target.value);
-      }}></input>
       <label>Email:</label>
       <input 
         type="text" 
         onChange={(e)=>{
         setEmail(e.target.value);
       }}></input>
-      <label>Telephone:</label>
+      <label>Password:</label>
       <input 
         type="text" 
         onChange={(e)=>{
-        setTel(e.target.value);
+        setPassword(e.target.value);
       }}></input>
 
-      <button onClick={addToList}>Add To List</button>
+      <button onClick={addToList}>Login</button>
     </div>
   );
 }
