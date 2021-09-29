@@ -43,7 +43,7 @@ const register = async (req, res) =>{
 			return res.send("User already exists")
 		}
 	} catch (error) {
-		console.log(err)
+		console.log(error)
 	}
 }
 
@@ -72,7 +72,7 @@ const loginUser = async (req, res) => {
 		}
 		
 	} catch (error) {
-		console.log(err)
+		console.log(error)
 	}
 }
 
