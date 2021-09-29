@@ -1,2 +1,2 @@
-const {Agenda} = require('../models/agenda.js')
+const { Agenda } = require('../models/agenda.js')
 

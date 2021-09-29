@@ -1,7 +1,5 @@
-// connect to Mongoose model
-const mongoose = require('mongoose')
-const encryption = require('../utils/encryption')
-const {User, UserSchema} = require('../models/user.js')
+const bcrypt = require("bcrypt")
+const { User } = require('../models/user.js')
 
 
 const getAllUsers = async (req, res) => { 
@@ -15,63 +13,92 @@ const getAllUsers = async (req, res) => {
 	}
 }
 
-const register = async (req, res) =>{
+
+
+const userRegister = async (req, res) =>{
+	
 	try {
-		foundUser = User.find((data) => req.body.email === data.email)
-		if (!foundUser) {
+
+		// check if the mail has been used
+		const existUser = await User.findOne({ username: req.body.email})
+
+		if (!existUser) {
 			
-			hashPassword = await bcrypt.hash(req.body.password, 10)
+			// check if confirmed password match the password
+			if (req.body.confirmed == req.body.password){
+				// encrypt password
+				hashPassword = await bcrypt.hash(req.body.password, 10)
 
-			newUser = new User({
-				name: req.body.name,
-				email: req.body.email,
-				password: hashPassword,
-				tel: req.body.tel
-			})
+				newUser = new User({
+					email: req.body.email,
+					password: hashPassword,
+					name: req.body.name,
+					age: req.body.age,
+					gender: req.body.gender
+				})
+				
+				// save to db
+				try {
+					await newUser.save()
+				} catch (error) {
+					console.log(error)
+				}
+	
+				res.send("Account registration is successful")
+				console.log("Account registration is successful")
 
-			try {
-				await newUser.save()
-			} catch (error) {
-				res.status(409).json({ message: error.message });
+			} else {
+				res.send("confirmed password doesn't match the password")
+				console.log("confirmed password doesn't match the password")
 			}
 
-			res.send("Account registration is successful")
+
+			
 		} else {
 			res.send("Failed: Email has already been used")
+			console.log("Failed: Email has already been used")
 		}
 	} catch (error) {
-		
+		console.log(error)
 	}
 }
 
 
 
-const loginUser = async (req, res) => {
+const userLogin = async (req, res) => {
 	try {
-		foundUser = User.find((data) => req.body.email === data.email)
-		if (foundUser) {
+		
+		const existUser = await User.findOne({ username: req.body.email})
+
+		if (existUser) {
 			Password = req.body.password
-			storedPassword = foundUser.password
+			storedPassword = existUser.password
 
 			const passwordMatch = await bcrypt.compare(Password, storedPassword)
 
 			if (passwordMatch) {
 				res.send("Login Success: Welcome")
+				console.log("Login Success: Welcome")
 			} else {
 				res.send("wrong password")
+				console.log("wrong password")
 			}
 
 
 		} else {
 			res.send("User Not Found")
+			console.log("User Not Found")
 		}
 		
 	} catch (error) {
-		
+		res.send("User Not Found")
+		console.log(error)
 	}
 }
 
 // export the functions
 module.exports = {
 	getAllUsers,
+	userRegister,
+	userLogin,
 }
