@@ -47,6 +47,36 @@ const register = async (req, res) =>{
 	}
 }
 
+// registering a new user
+const register = async (req, res) => {
+	const user = await User.findOne( {email: req.body.email})
+	if (user) {
+		res.status(400)
+		return res.send("User already exists")
+	}
+
+	bcrypt.genSalt(10, async function (err, salt) {
+	  if (err) return next(err);
+	  bcrypt.hash(req.body.password, salt, async function (err, hash) {
+		if (err) return next(err);
+  
+		// new user collection
+		const newUser = new User({
+			email: req.body.email,
+			password: hashPassword,
+			name: req.body.username,
+			age: req.body.age,
+			gender: req.body.gender
+		});
+  
+		await newUser.save()
+		res.status(200)
+		return res.send("Succeed to register")
+  
+	  });
+	});
+  }
+
 const loginUser = async (req, res) => {
 	try {
 		const user = await User.findOne( {email: req.body.email})
