@@ -16,37 +16,6 @@ const getAllUsers = async (req, res) => {
 	}
 }
 
-const register = async (req, res) =>{
-	try {
-		const user = await User.findOne( {email: req.body.email})
-		if (!user) {
-			hashPassword = await bcrypt.hash(req.body.password, 10)
-			newUser = new User({
-				email: req.body.email,
-				password: hashPassword,
-				name: req.body.username,
-				age: req.body.age,
-				gender: req.body.gender
-			})
-
-			try {
-				await newUser.save()
-			} catch (error) {
-				res.status(409).json({ message: error.message });
-			}
-
-			res.status(200)
-			return res.send("Succeed to register")
-			
-		} else {
-			res.status(400)
-			return res.send("User already exists")
-		}
-	} catch (error) {
-		console.log(error)
-	}
-}
-
 // registering a new user
 const register = async (req, res) => {
 	const user = await User.findOne( {email: req.body.email})
