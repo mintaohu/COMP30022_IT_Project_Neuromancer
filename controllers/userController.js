@@ -32,7 +32,7 @@ const register = async (req, res) => {
 		// new user collection
 		const newUser = new User({
 			email: req.body.email,
-			password: hashPassword,
+			password: hash,
 			name: req.body.username,
 			age: req.body.age,
 			gender: req.body.gender
