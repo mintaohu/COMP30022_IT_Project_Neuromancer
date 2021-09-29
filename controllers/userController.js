@@ -18,15 +18,13 @@ const getAllUsers = async (req, res) => {
 
 const register = async (req, res) =>{
 	try {
-		foundUser = User.find((data) => req.body.email === data.email)
-		if (!foundUser) {
-			
-			hashPassword = await bcrypt.hash(req.body.pwd, 10)
-
+		const user = await User.findOne( {email: req.body.email})
+		if (!user) {
+			hashPassword = await bcrypt.hash(req.body.password, 10)
 			newUser = new User({
-				name: req.body.username,
 				email: req.body.email,
 				password: hashPassword,
+				name: req.body.username,
 				age: req.body.age,
 				gender: req.body.gender
 			})
@@ -37,9 +35,9 @@ const register = async (req, res) =>{
 				res.status(409).json({ message: error.message });
 			}
 
-			res.send("Account registration is successful")
+			res.status(200)
 		} else {
-			res.send("Failed: Email has already been used")
+			res.status(400)
 		}
 	} catch (error) {
 		console.log(err)
@@ -56,14 +54,14 @@ const loginUser = async (req, res) => {
 			const passwordMatch = await bcrypt.compare(Password, storedPassword)
 
 			if (passwordMatch) {
-				res.send("Login Success: Welcome")
+				res.status(200)
 			} else {
-				res.send("wrong password")
+				res.status(400)
 			}
 
 
 		} else {
-			res.send("User Not Found")
+			res.status(400)
 		}
 		
 	} catch (error) {

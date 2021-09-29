@@ -15,7 +15,7 @@ userRouter.get('/test', (req, res) => userController.getAllUsers(req, res))
 
 userRouter.post('/register', userController.register)
 
-userRouter.post('/login/:Email', userController.loginUser)
+userRouter.post('/login', userController.loginUser)
 
 
 
