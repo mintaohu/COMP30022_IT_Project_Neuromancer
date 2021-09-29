@@ -36,8 +36,11 @@ const register = async (req, res) =>{
 			}
 
 			res.status(200)
+			return res.send("Succeed to register")
+			
 		} else {
 			res.status(400)
+			return res.send("User already exists")
 		}
 	} catch (error) {
 		console.log(err)
@@ -46,22 +49,26 @@ const register = async (req, res) =>{
 
 const loginUser = async (req, res) => {
 	try {
-		foundUser = User.find((data) => req.params.Email === data.email)
-		if (foundUser) {
+		const user = await User.findOne( {email: req.body.email})
+		if (user) {
 			Password = req.body.password
-			storedPassword = foundUser.password
+			storedPassword = user.password
 
 			const passwordMatch = await bcrypt.compare(Password, storedPassword)
 
 			if (passwordMatch) {
 				res.status(200)
+				return res.send("Succeed to login")
 			} else {
 				res.status(400)
+				return res.send("Wrong password")
 			}
 
 
 		} else {
 			res.status(400)
+			return res.send("User not found")
+			
 		}
 		
 	} catch (error) {
