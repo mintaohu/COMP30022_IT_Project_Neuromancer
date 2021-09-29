@@ -25,9 +25,7 @@ const register = async (req, res) => {
 	}
 
 	bcrypt.genSalt(10, async function (err, salt) {
-	  if (err) return next(err);
 	  bcrypt.hash(req.body.password, salt, async function (err, hash) {
-		if (err) return next(err);
   
 		// new user collection
 		const newUser = new User({
