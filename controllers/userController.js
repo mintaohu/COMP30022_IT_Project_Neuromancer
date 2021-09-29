@@ -20,7 +20,7 @@ const userRegister = async (req, res) =>{
 	try {
 
 		// check if the mail has been used
-		const existUser = await User.findOne({ username: req.body.email})
+		const existUser = await User.findOne({ email: req.body.email})
 
 		if (!existUser) {
 			
@@ -68,7 +68,7 @@ const userRegister = async (req, res) =>{
 const userLogin = async (req, res) => {
 	try {
 		
-		const existUser = await User.findOne({ username: req.body.email})
+		const existUser = await User.findOne({ email: req.body.email})
 
 		if (existUser) {
 			Password = req.body.password
@@ -91,7 +91,6 @@ const userLogin = async (req, res) => {
 		}
 		
 	} catch (error) {
-		res.send("User Not Found")
 		console.log(error)
 	}
 }
