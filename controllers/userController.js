@@ -21,34 +21,35 @@ const register = async (req, res) => {
 
 	try {
 		const user = await User.findOne( {email: req.body.email})
-	if (user) {
-		res.status(400)
-		return res.send("User already exists")
-	}
+		if (user) {
+			res.status(400)
+			return res.send("User already exists")
+		}
 
-	bcrypt.genSalt(10, async function (err, salt) {
-	  bcrypt.hash(req.body.password, salt, async function (err, hash) {
+		bcrypt.genSalt(10, async function (err, salt) {
+			if (err) return next(err);
+	  		bcrypt.hash(req.body.password, salt, async function (err, hash) {
   
-		// new user collection
-		const newUser = new User({
-			email: req.body.email,
-			password: hash,
-			name: req.body.username,
-			age: req.body.age,
-			gender: req.body.gender
+				// new user collection
+				const newUser = new User({
+					email: req.body.email,
+					password: hash,
+					username: req.body.username,
+					age: req.body.age,
+					gender: req.body.gender
+				});
+  
+				await newUser.save()
+				res.status(200)
+				return res.send("Succeed to register")
+  
+	  		});
 		});
-  
-		await newUser.save()
-		res.status(200)
-		return res.send("Succeed to register")
-  
-	  });
-	});
 	} catch (err) {
 		console.log(err)
 	}
 	
-  }
+}
 
 const loginUser = async (req, res) => {
 	try {

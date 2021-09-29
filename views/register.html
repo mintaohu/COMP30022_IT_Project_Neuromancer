@@ -38,12 +38,14 @@
 	<body>
 		<div class="login-form">
 			<h1>SeeYa Register</h1>
-			<form action="/login" method="POST">
-				<input type="text" name="username" placeholder="Username" required>
+			<form action="/register" method="POST">
+				<input type="text" name="email" placeholder="Email" required>
+				
 				<input type="password" name="password" placeholder="Password" required>
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="text" name="email" placeholder="Email" required>
-                <input type="text" name="tel" placeholder="Tel" required>
+                <input type="text" name="ConfirmedPswd" placeholder="ConfirmedPswd" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="number" name="age" placeholder="Age" required>
+				<input type="text" name="gender" placeholder="Gender" required>
 				<input type="submit">
 			</form>
 		</div>
