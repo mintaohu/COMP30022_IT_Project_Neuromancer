@@ -17,7 +17,7 @@ const getAllUsers = async (req, res) => {
 }
 
 // registering a new user
-const register = async (req, res) => {
+const register = async (req, res, next) => {
 
 	try {
 		const user = await User.findOne( {email: req.body.email})
@@ -29,7 +29,7 @@ const register = async (req, res) => {
 		bcrypt.genSalt(10, async function (err, salt) {
 			if (err) return next(err);
 	  		bcrypt.hash(req.body.password, salt, async function (err, hash) {
-  
+				if (err) return next(err);
 				// new user collection
 				const newUser = new User({
 					email: req.body.email,
@@ -80,10 +80,32 @@ const loginUser = async (req, res) => {
 	}
 }
 
+const getEvents =  async (req, res) => {
+
+    let thisUser = await User.findOne( {email: req.user.email}).lean()
+    let userEvents = thisUser.events
+	console.log( req.user.email);
+    try {
+        if (userEvents.length > 0){
+			res.status(200)
+        	return res.json(userEvents)
+        }
+		
+		res.status(204)
+        return res.send("User's agenda is currently empty")
+        
+
+    } catch (err) {
+        res.status(400)
+        return res.send(err.msg)
+    }
+}
+
 
 // export the functions
 module.exports = {
 	getAllUsers,
 	register,
-	loginUser
+	loginUser,
+	getEvents
 }

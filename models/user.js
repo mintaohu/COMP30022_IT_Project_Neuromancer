@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+const {EventSchema} = require("./event.js")
 
 const UserSchema = new mongoose.Schema({
 
@@ -11,8 +11,8 @@ const UserSchema = new mongoose.Schema({
 	gender: { type: String, enum: ["Male", "Female"], required: true },
 
 	// user's schedule information and friends
-	contact: {type: [], required: false},
-	events: {type: [], required: false},
+	contact: [{type:String}],
+	events: [EventSchema]
 
 
 })
