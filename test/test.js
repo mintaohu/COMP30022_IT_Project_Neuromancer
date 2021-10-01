@@ -24,8 +24,7 @@ describe('register api', () => {
             .post('/register')
             .send(params)
             .end((err, res) => {
-                res.should.have.status(200);
-                
+                res.should.have.status(400);
             });
     });
 });
@@ -41,7 +40,7 @@ describe('login api', () => {
           .post('/login')
           .send(params)
           .end((err, res) => {
-              res.should.have.status(200);
+              res.should.have.status(400);
               
           });
   });
