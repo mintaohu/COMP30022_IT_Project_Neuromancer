@@ -129,3 +129,5 @@ app.post("/login", check_login = (req, res) => {
 app.listen(5000,()=>{
     console.log("Seeya is listening...")
 })
+
+module.exports = app;
