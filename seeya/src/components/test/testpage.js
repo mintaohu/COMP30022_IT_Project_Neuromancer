@@ -2,6 +2,7 @@ import backArrow from '../../images/yanni/arrow-left.svg';
 import { NavLink } from "react-router-dom";
 import { useUserEmail } from "../../api/test.js";
 
+{/* ONLY FOR TEST */}
 function GetEmail() {
 
     const { loading, email, error } = useUserEmail();

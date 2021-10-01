@@ -5,12 +5,14 @@ import { NavLink} from "react-router-dom";
 function ProfileEditForm(){
     return(
         <div className = "profileBody">
-            <NavLink style={{textDecoration:'none' }} to="/" className = "backButton">
+            {/* Click Back Button to back to profile page */}
+            <NavLink style={{textDecoration:'none' }} to="/profile" className = "backButton">
                 <img src = {backArrow} alt = "back arrow" className = "backArrow"></img>
                 <span style={{color:'black' }}>Back</span>
             </NavLink>
 
-            <p className="profileNametag">My Account</p>
+            {/* Profile Form that users can edit */}
+            <p className="profileNametag">Edit Profile</p>
 
             <div className = "profileMain">
                 <form action="#" method="post">
@@ -19,7 +21,6 @@ function ProfileEditForm(){
                             <img src={userPhoto} alt="user's selfie" style={{height: "10rem", width: "10rem", margin:"1rem 1rem"}}></img>
                         </div>
 
-                        {/*TODO: Save these information*/}
                         <div className="inputPair">
                             <label htmlFor="email" className="profileTitle">Email</label>
                             <input type="text" id="username" className="profileInput" />
@@ -48,17 +49,22 @@ function ProfileEditForm(){
                         <div className = "alignForm">
                             <div className = "alignContent">
                                 <div className="profileTitle"><label htmlFor="age">Age</label></div>
-                                <div><input type="number" name="username" id="age" className = "profileInput" /></div>
+                                <div><input type="number" id="age" className = "profileInput" /></div>
                             </div>
                             <div className = "alignContent">
                                 <div className="profileTitle"><label htmlFor="gender">Gender</label></div>
-                                <div><input type="text" name="username" id="gender" className = "profileInput" /></div>
+                                <div><input type="text" id="gender" className = "profileInput" /></div>
                             </div>
                         </div>
 
-                        {/*TODO: save information function, log out function*/}
-                        <div className="inputPair"><NavLink to="/profile" id="button" className="profileButton">Save Information</NavLink></div>
-                        <div className="inputPair"><NavLink to="/" id="button" className="profileButton" style={{backgroundColor:"#FF7B7B"}}>Log out</NavLink></div>
+                        {/*TODO: Click Save Information to save new changes*/}
+                        <div className="inputPair">
+                            <NavLink to="/profile" id="button" className="profileButton">Save Information</NavLink>
+                        </div>
+                        {/*TODO: Click Log Out to log out the account and jump to homepage*/}
+                        <div className="inputPair">
+                            <NavLink to="/" id="button" className="profileButton" style={{backgroundColor:"#FF7B7B"}}>Log out</NavLink>
+                        </div>
                     </div>
                 </form>
             </div>

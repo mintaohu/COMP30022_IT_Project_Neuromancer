@@ -42,7 +42,7 @@ function App() {
           <AddAgenda />
         </Route>
 
-        {/* for test */}
+        {/* Special page for testing APIs and will delete after finishing*/}
         <Route exact path="/test">
           <Test />
         </Route>

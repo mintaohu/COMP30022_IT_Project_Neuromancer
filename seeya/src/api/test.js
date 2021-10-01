@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 
+//ONLY FOR TEST
+
 const BASE_URL = "https://seeya-neuromancer.herokuapp.com"
 
 function getUserEmail() {
 
-    // get vendor's name
+    // get user's name
     let userName = "Miro";
 
     // URL + Route
     const endpoint = BASE_URL + "/";
 
-    // send Post Request to allocate the customer's collection
+    // send Post Request to allocate the user's collection
     let postReq = fetch(endpoint, {
         method: "POST",
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
