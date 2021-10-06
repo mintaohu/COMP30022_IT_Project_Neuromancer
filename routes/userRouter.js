@@ -57,6 +57,7 @@ passport.use(new localStrategy({
 				if (err) return done(err);
 				if (res === false) return done(null, false, {message: "Incorrect password"});
 
+				
 				return done(null, user);
 			})
 		})
@@ -84,9 +85,19 @@ userRouter.post('/login', function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err) { res.status(400); return next(err); }
     	if (!user) { res.status(400); return  next(err); }
-    	req.logIn(user, function(err) {
+    	req.logIn(user, async function(err) {
      		if (err) { return next(err); }
     		delete req.session.returnTo;
+			
+			await User.updateOne(
+				{
+					email: req.user.email
+				},
+				{$set: {
+					status: "Online"}
+				}
+			);
+
 			res.status(200);
             return res.send("Succeed to login")
     	});
@@ -94,27 +105,28 @@ userRouter.post('/login', function(req, res, next) {
 })
 
 
-userRouter.get('/logout', function (req, res) {
+userRouter.get('/logout', async function (req, res) {
+	await User.updateOne(
+		{
+			email: req.user.email
+		},
+		{$set: {
+			status: "Offline"}
+		}
+	);
+
 	req.logout();
 	res.status(200)
     return res.send("successfully logout")
 })
 
 
-// process routes by calling controller functions
-userRouter.get('/test', (req, res) => userController.getAllUsers(req, res))
-
-// userRouter.get('register', (req, res) => {
-// 	res.render('register')
-// })
-
-// userRouter.get('login', (req, res) => {
-// 	res.render('login')
-// })
 
 userRouter.post('/register', userController.register)
 
 userRouter.get('/getEvents', userController.getEvents)
+
+userRouter.get('/getContacts', userController.getContacts)
 
 
 

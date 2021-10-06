@@ -5,17 +5,6 @@ const {User, UserSchema} = require('../models/user.js')
 const bcrypt = require('bcrypt')
 
 
-const getAllUsers = async (req, res) => { 
-	try {
-		// we only need names and photos
-		const users = await User.find( {}, {name:true, email:true}).lean()
-		
-		res.json(users)	
-	} catch (err) {
-		console.log(err)
-	}
-}
-
 // registering a new user
 const register = async (req, res, next) => {
 
@@ -36,7 +25,8 @@ const register = async (req, res, next) => {
 					password: hash,
 					username: req.body.username,
 					age: req.body.age,
-					gender: req.body.gender
+					gender: req.body.gender,
+					status: "Offline"
 				});
   
 				await newUser.save()
@@ -51,48 +41,39 @@ const register = async (req, res, next) => {
 	
 }
 
-const loginUser = async (req, res) => {
-	try {
-		const user = await User.findOne( {email: req.body.email})
-		if (user) {
-			Password = req.body.password
-			storedPassword = user.password
-
-			const passwordMatch = await bcrypt.compare(Password, storedPassword)
-
-			if (passwordMatch) {
-				res.status(200)
-				return res.send("Succeed to login")
-			} else {
-				res.status(400)
-				return res.send("Wrong password")
-			}
-
-
-		} else {
-			res.status(400)
-			return res.send("User not found")
-			
-		}
-		
-	} catch (error) {
-		console.log(error)
-	}
-}
-
 const getEvents =  async (req, res) => {
 
     let thisUser = await User.findOne( {email: req.user.email}).lean()
     let userEvents = thisUser.events
-	console.log( req.user.email);
     try {
         if (userEvents.length > 0){
 			res.status(200)
         	return res.json(userEvents)
         }
+
 		
-		res.status(204)
+		res.status(300)
         return res.send("User's agenda is currently empty")
+        
+
+    } catch (err) {
+        res.status(400)
+        return res.send(err.msg)
+    }
+}
+
+const getContacts =  async (req, res) => {
+
+    let thisUser = await User.findOne( {email: req.user.email}).lean()
+    let userContacts = thisUser.contact
+
+    try {
+        if (userContacts.length > 0){
+			res.status(200)
+        	return res.json(userContacts)
+        }
+		res.status(300)
+        return res.send("No contact is found")
         
 
     } catch (err) {
@@ -104,8 +85,7 @@ const getEvents =  async (req, res) => {
 
 // export the functions
 module.exports = {
-	getAllUsers,
 	register,
-	loginUser,
-	getEvents
+	getEvents,
+	getContacts
 }

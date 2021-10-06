@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
 
 	// user's schedule information and friends
 	contact: [{type:String}],
-	events: [EventSchema]
+	events: [{type:String}],
+	status: { type: String, enum: ["Online", "Offline"], required: true}
 
 
 })
