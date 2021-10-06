@@ -16,9 +16,9 @@ const register = async (req, res, next) => {
 		}
 
 		bcrypt.genSalt(10, async function (err, salt) {
-			if (err) return next(err);
+			if (err) {res.status(400); return next(err);}
 	  		bcrypt.hash(req.body.password, salt, async function (err, hash) {
-				if (err) return next(err);
+				if (err) {res.status(400); return next(err);}
 				// new user collection
 				const newUser = new User({
 					email: req.body.email,
@@ -96,10 +96,28 @@ const getContacts =  async (req, res) => {
     }
 }
 
+const resetPassword =  async (req, res) => {
+	try {
+		bcrypt.genSalt(10, async function (err, salt) {
+			if (err) {res.status(400); return next(err);}
+	  		bcrypt.hash(req.body.password, salt, async function (err, hash) {
+				if (err) {res.status(400); return next(err);}
+				await User.updateOne( {email: req.user.email},{$set: {password: hash}})
+				res.status(200)
+				return res.send("Succeed to reset password")
+	  		});
+		});
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
 
 // export the functions
 module.exports = {
 	register,
 	getEvents,
-	getContacts
+	getContacts,
+	resetPassword
 }

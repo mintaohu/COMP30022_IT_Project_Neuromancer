@@ -29,6 +29,10 @@ app.get('/register', (req, res) => {
 	res.sendFile('./views/register.html', {root:__dirname})
 })
 
+app.get('/resetPassword', (req, res) => {
+	res.sendFile('./views/resetPassword.html', {root:__dirname})
+})
+
 
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors

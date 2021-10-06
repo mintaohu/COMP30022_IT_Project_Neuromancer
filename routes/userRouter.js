@@ -145,6 +145,8 @@ userRouter.get('/getEvents', userController.getEvents)
 
 userRouter.get('/getContacts', userController.getContacts)
 
+userRouter.post('/resetPassword', userController.resetPassword)
+
 
 
 // export the router
