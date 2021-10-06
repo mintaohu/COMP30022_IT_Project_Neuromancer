@@ -84,6 +84,7 @@ function isLoggedOut(req, res, next) {
 
 userRouter.post('/login', function(req, res, next) {
 	try {
+		let emailCheck = req.user.email;
 		res.status(300);
 		return res.send("User already loged in");
 	}catch(e) {
