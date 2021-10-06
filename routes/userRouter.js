@@ -147,6 +147,7 @@ userRouter.get('/getContacts', userController.getContacts)
 
 userRouter.post('/resetPassword', userController.resetPassword)
 
+userRouter.get('/getProfile', userController.getProfile)
 
 
 // export the router

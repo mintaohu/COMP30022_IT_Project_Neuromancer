@@ -37,6 +37,7 @@ app.get('/resetPassword', (req, res) => {
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors
 	//res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})
+	res.status(404)
 	res.send('error')
 })
 

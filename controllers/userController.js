@@ -113,11 +113,23 @@ const resetPassword =  async (req, res) => {
 	}
 }
 
+const getProfile = async (req, res) => {
+	try {
+		let user = await User.findOne({email: req.user.email}).lean()
+		res.status(200)
+		return res.json(user)
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
 
 // export the functions
 module.exports = {
 	register,
 	getEvents,
 	getContacts,
-	resetPassword
+	resetPassword,
+	getProfile
 }
