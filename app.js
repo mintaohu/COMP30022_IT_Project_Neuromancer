@@ -41,7 +41,9 @@ app.get('/createEvent', (req, res) => {
 	res.sendFile('./views/createEvent.html', {root:__dirname})
 })
 
-
+app.get('/editEvent', (req, res) => {
+	res.sendFile('./views/editEvent.html', {root:__dirname})
+})
 
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors

@@ -154,6 +154,8 @@ userRouter.post('/editProfile', userController.editProfile)
 
 userRouter.post('/createEvent', agendaController.createEvent)
 
+userRouter.post('/editEvent/:eventId', agendaController.editEvent)
+
 
 // export the router
 module.exports = userRouter
