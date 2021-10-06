@@ -37,6 +37,10 @@ app.get('/editProfile', (req, res) => {
 	res.sendFile('./views/editProfile.html', {root:__dirname})
 })
 
+app.get('/createEvent', (req, res) => {
+	res.sendFile('./views/createEvent.html', {root:__dirname})
+})
+
 
 
 

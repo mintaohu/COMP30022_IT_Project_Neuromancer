@@ -26,6 +26,7 @@ userRouter.use(session({
 
 // connect to controller
 const userController = require('../controllers/userController.js')
+const agendaController = require('../controllers/agendaController.js')
 
 const {User} = require('../models/user.js');
 const { Console } = require('console');
@@ -150,6 +151,8 @@ userRouter.post('/resetPassword', userController.resetPassword)
 userRouter.get('/getProfile', userController.getProfile)
 
 userRouter.post('/editProfile', userController.editProfile)
+
+userRouter.post('/createEvent', agendaController.createEvent)
 
 
 // export the router

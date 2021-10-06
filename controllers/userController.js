@@ -132,12 +132,14 @@ const editProfile = async (req, res) => {
 	try {
 		await User.updateOne( {email: req.user.email},{$set: {age: req.body.age, bio: req.body.bio, education: req.body.education, work: req.body.work, currentCity: req.body.currentCity}})
 		res.status(200)
-		return res.redirect("/getProfile")
+		let user = await User.findOne({email: req.user.email}).lean()
+		return res.json(user)
 	} catch (err) {
 		res.status(400)
 		console.log(err)
 	}
 }
+
 
 
 // export the functions
@@ -147,5 +149,5 @@ module.exports = {
 	getContacts,
 	resetPassword,
 	getProfile,
-	editProfile
+	editProfile,
 }
