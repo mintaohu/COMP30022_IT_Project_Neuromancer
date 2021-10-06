@@ -27,7 +27,8 @@ userRouter.use(session({
 // connect to controller
 const userController = require('../controllers/userController.js')
 
-const {User} = require('../models/user.js')
+const {User} = require('../models/user.js');
+const { Console } = require('console');
 userRouter.use(passport.initialize());
 userRouter.use(passport.session());
 
@@ -82,26 +83,41 @@ function isLoggedOut(req, res, next) {
 
 
 userRouter.post('/login', function(req, res, next) {
-	passport.authenticate('local', function(err, user, info) {
-		if (err) { res.status(400); return next(err); }
-    	if (!user) { res.status(400); return  next(err); }
-    	req.logIn(user, async function(err) {
-     		if (err) { return next(err); }
-    		delete req.session.returnTo;
-			
-			await User.updateOne(
-				{
-					email: req.user.email
-				},
-				{$set: {
-					status: "Online"}
+	try {
+		res.status(300);
+		return res.send("User already loged in");
+	}catch(e) {
+		passport.authenticate('local', function(err, user, info) {
+			if (err) { res.status(400); return next(err); }
+			if (!user) { res.status(400); return  next(err); }
+			req.logIn(user, async function(err) {
+				 if (err) { return next(err); }
+				delete req.session.returnTo;
+	
+				let currentUser = await User.findOne({email: req.user.email}).lean();
+				if (!currentUser.status.localeCompare("Online")) {
+					res.status(300);
+					return res.send("User already loged in");
 				}
-			);
+				
+				
+				await User.updateOne(
+					{
+						email: req.user.email
+					},
+					{$set: {
+						status: "Online"}
+					}
+				);
+	
+				res.status(200);
+				return res.send("Succeed to login")
+			});
+	  })(req, res, next);
+	}
 
-			res.status(200);
-            return res.send("Succeed to login")
-    	});
-  })(req, res, next);
+
+	
 })
 
 
