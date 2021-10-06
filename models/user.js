@@ -13,9 +13,11 @@ const UserSchema = new mongoose.Schema({
 	// user's schedule information and friends
 	contact: [{type:String}],
 	events: [{type:String}],
-	status: { type: String, enum: ["Online", "Offline"], required: true}
-
-
+	status: { type: String, enum: ["Online", "Offline"], required: true},
+	bio: {type: String},
+	education: {type: String},
+	work: {type: String},
+	currentCity: {type: String}
 })
 
 const User = mongoose.model("User", UserSchema)

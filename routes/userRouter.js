@@ -149,6 +149,8 @@ userRouter.post('/resetPassword', userController.resetPassword)
 
 userRouter.get('/getProfile', userController.getProfile)
 
+userRouter.post('/editProfile', userController.editProfile)
+
 
 // export the router
 module.exports = userRouter

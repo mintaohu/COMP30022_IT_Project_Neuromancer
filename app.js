@@ -33,6 +33,11 @@ app.get('/resetPassword', (req, res) => {
 	res.sendFile('./views/resetPassword.html', {root:__dirname})
 })
 
+app.get('/editProfile', (req, res) => {
+	res.sendFile('./views/editProfile.html', {root:__dirname})
+})
+
+
 
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors
