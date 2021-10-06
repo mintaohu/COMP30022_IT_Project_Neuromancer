@@ -63,14 +63,28 @@ const getEvents =  async (req, res) => {
 }
 
 const getContacts =  async (req, res) => {
-
     let thisUser = await User.findOne( {email: req.user.email}).lean()
     let userContacts = thisUser.contact
+	let sortedContacts = new Array()
+
+	for (let friendId of userContacts) {
+		let friend = await User.findOne({_id: friendId}).lean()
+		if (!friend.status.localeCompare("Online")) {
+			let index = userContacts.indexOf(friendId)
+			userContacts.splice(index, 1)
+			sortedContacts.push(friendId)
+
+		}
+	}
+	
+	for (let friendId of userContacts) {
+		sortedContacts.push(friendId)
+	}
 
     try {
-        if (userContacts.length > 0){
+        if (sortedContacts.length > 0){
 			res.status(200)
-        	return res.json(userContacts)
+        	return res.json(sortedContacts)
         }
 		res.status(300)
         return res.send("No contact is found")
