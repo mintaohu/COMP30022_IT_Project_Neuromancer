@@ -162,6 +162,10 @@ userRouter.get('/getFriendRequest', userController.getFriendRequest)
 
 userRouter.get('/acceptFriendRequest/:friendRequestId', userController.acceptFriendRequest)
 
+userRouter.get('/declineFriendRequest/:friendRequestId', userController.declineFriendRequest)
+
+userRouter.get('/deleteFriend/:email', userController.deleteFriend)
+
 
 // export the router
 module.exports = userRouter
