@@ -226,6 +226,17 @@ const acceptFriendRequest = async (req, res) => {
 	}
 }
 
+const declineFriendRequest = async (req, res) => {
+	try {
+		await FriendRequest.deleteOne({_id: req.params.friendRequestId})
+		res.status(200)
+		return res.send("succeed to decline friend request")
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
 // export the functions
 module.exports = {
 	register,
@@ -237,6 +248,6 @@ module.exports = {
 	createFriendRequest,
 	getFriendRequest,
 	acceptFriendRequest,
-// 	declineFriendRequest,
+	declineFriendRequest,
 // 	deleteFriend
 }
