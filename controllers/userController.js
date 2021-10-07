@@ -180,6 +180,16 @@ const createFriendRequest = async (req, res) => {
 	}
 }
 
+const getFriendRequest = async (req, res) => {
+	try {
+		let friendRequestArray = await FriendRequest.find({from: req.user.email}).lean()
+		res.status(200)
+		return res.json(friendRequestArray)
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
 
 // export the functions
 module.exports = {
@@ -189,5 +199,6 @@ module.exports = {
 	resetPassword,
 	getProfile,
 	editProfile,
-	createFriendRequest
+	createFriendRequest,
+	getFriendRequest
 }
