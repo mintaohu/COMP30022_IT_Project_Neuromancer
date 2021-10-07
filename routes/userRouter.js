@@ -160,6 +160,8 @@ userRouter.post('/createFriendRequest', userController.createFriendRequest)
 
 userRouter.get('/getFriendRequest', userController.getFriendRequest)
 
+userRouter.get('/acceptFriendRequest/:friendRequestId', userController.acceptFriendRequest)
+
 
 // export the router
 module.exports = userRouter

@@ -191,6 +191,41 @@ const getFriendRequest = async (req, res) => {
 	}
 }
 
+const acceptFriendRequest = async (req, res) => {
+	try {
+		let friendRequest = await FriendRequest.findOne({_id: req.params.friendRequestId}).lean()
+		let sender = await User.findOne({email: friendRequest.from})
+		let recipient = await User.findOne({email: friendRequest.to})
+
+		for (friend of sender.contact) {
+			if (!friend.localeCompare(recipient.email)) {
+				res.status(400)
+				return res.send("You are already friends")
+			}
+		}
+
+		for (friend of recipient.contact) {
+			if (!friend.localeCompare(sender.email)) {
+				res.status(400)
+				return res.send("You are already friends")
+			}
+
+		}
+
+		sender.contact.push(recipient.email)
+		recipient.contact.push(sender.email)
+		await User.updateOne({email: sender.email},{$set: {contact: sender.contact}})
+		await User.updateOne({email: recipient.email},{$set: {contact: recipient.contact}})
+		await FriendRequest.deleteOne({_id: req.params.friendRequestId})
+
+		res.status(200)
+		return res.send("succeed to accept friend request")
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
 // export the functions
 module.exports = {
 	register,
@@ -200,5 +235,8 @@ module.exports = {
 	getProfile,
 	editProfile,
 	createFriendRequest,
-	getFriendRequest
+	getFriendRequest,
+	acceptFriendRequest,
+// 	declineFriendRequest,
+// 	deleteFriend
 }
