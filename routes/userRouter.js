@@ -156,6 +156,8 @@ userRouter.post('/createEvent', agendaController.createEvent)
 
 userRouter.post('/editEvent/:eventId', agendaController.editEvent)
 
+userRouter.post('/createFriendRequest', userController.createFriendRequest)
+
 
 // export the router
 module.exports = userRouter

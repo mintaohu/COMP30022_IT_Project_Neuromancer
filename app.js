@@ -45,6 +45,9 @@ app.get('/editEvent', (req, res) => {
 	res.sendFile('./views/editEvent.html', {root:__dirname})
 })
 
+app.get('/createFriendRequest', (req, res) => {
+	res.sendFile('./views/createFriendRequest.html', {root:__dirname})
+})
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors
 	//res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})

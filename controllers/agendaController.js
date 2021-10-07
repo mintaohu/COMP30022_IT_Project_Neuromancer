@@ -42,6 +42,34 @@ const editEvent = async (req, res) => {
 	}
 }
 
+// const joinEvent= async (req, res) => {
+//     try {
+        
+
+//         let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
+
+//         if (req.user.email.localeCompare(currentEvent.sponsor)) {
+//             res.status(400)
+//             return res.send("Do not have permission to ")
+//         }
+
+//         let participators = currentEvent.participators
+//         if (participators.indexof(req.params.participatorEmail) != -1) {
+//             participators.push(req.params.participatorEmail)
+//         }
+
+//         await Event.updateOne({_id: req.params.eventId},{$set: {}})
+        
+// 		res.status(200)
+// 		return res.send("Succeed to edit event")
+// 	}catch (err) {
+// 		res.status(400)
+// 		console.log(err)
+// 	}
+// }
+
+
+
 // export the functions
 module.exports = {
 	createEvent,
