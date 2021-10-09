@@ -142,7 +142,7 @@ userRouter.get('/logout', async function (req, res) {
 
 userRouter.post('/register', userController.register)
 
-userRouter.get('/getEvents', userController.getEvents)
+userRouter.get('/getAgenda', agendaController.getAgenda)
 
 userRouter.get('/getContacts', userController.getContacts)
 

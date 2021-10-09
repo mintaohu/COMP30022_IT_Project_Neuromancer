@@ -46,26 +46,6 @@ const register = async (req, res, next) => {
 	
 }
 
-const getEvents =  async (req, res) => {
-
-    let thisUser = await User.findOne( {email: req.user.email}).lean()
-    let userEvents = thisUser.events
-    try {
-        if (userEvents.length > 0){
-			res.status(200)
-        	return res.json(userEvents)
-        }
-
-		
-		res.status(300)
-        return res.send("User's agenda is currently empty")
-        
-
-    } catch (err) {
-        res.status(400)
-        return res.send(err.msg)
-    }
-}
 
 const getContacts =  async (req, res) => {
 	try { 
@@ -264,7 +244,6 @@ const deleteFriend = async (req, res) => {
 // export the functions
 module.exports = {
 	register,
-	getEvents,
 	getContacts,
 	resetPassword,
 	getProfile,
