@@ -99,24 +99,46 @@ const editEvent = async (req, res) => {
 	}
 }
 
-// view other's agenda
-// const viewAgenda = async (req, res) => {
-// 	try {
-// 		let user = await User.findOne( {email: req.params.email}).lean()
-// 		for ( of user.events)
+//view other's agenda
+const viewAgenda = async (req, res) => {
+	try {
+		let otherUser = await User.findOne( {email: req.params.email}).lean()
+		let thisUser = await User.findOne( {email: req.user.email}).lean()
+		let areFriends = false
 
 		
-// 		res.status(300)
-//         return res.send("User's agenda is currently empty")
+		for (let friend of thisUser.contact) {
+			if (!friend.localeCompare(otherUser.email)){
+				areFriends = true
+			}
+		}		
+
+		let newAgenda = new Array()
+
+		for (let oneEvent of otherUser.agenda) {
+			if (areFriends) {
+				if (!oneEvent.privacy.localeCompare("Friends Only") || !oneEvent.privacy.localeCompare("Public")) {
+					newAgenda.push(oneEvent)
+				}
+			} else {
+				if (!oneEvent.privacy.localeCompare("Public")) {
+					newAgenda.push(oneEvent)
+				}
+			}
+		}
+
+		
+		res.status(200)
+        return res.json(newAgenda)
         
 
-//     } catch (err) {
-//         res.status(400)
-//         return res.send(err.msg)
-//     }
+    } catch (err) {
+        res.status(400)
+        return res.send(err.msg)
+    }
 
 	
-// } 
+} 
 
 // const joinEvent= async (req, res) => {
 //     try {
@@ -150,5 +172,6 @@ const editEvent = async (req, res) => {
 module.exports = {
 	getAgenda,
 	createEvent,
-    editEvent
+    editEvent,
+	viewAgenda
 }

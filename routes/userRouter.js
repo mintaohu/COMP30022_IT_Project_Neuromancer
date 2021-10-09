@@ -166,6 +166,7 @@ userRouter.get('/declineFriendRequest/:friendRequestId', userController.declineF
 
 userRouter.get('/deleteFriend/:email', userController.deleteFriend)
 
+userRouter.get('/viewAgenda/:email', agendaController.viewAgenda)
 
 // export the router
 module.exports = userRouter
