@@ -168,5 +168,7 @@ userRouter.get('/deleteFriend/:email', userController.deleteFriend)
 
 userRouter.get('/viewAgenda/:email', agendaController.viewAgenda)
 
+userRouter.get('/joinEvent/:eventId', agendaController.joinEvent)
+
 // export the router
 module.exports = userRouter

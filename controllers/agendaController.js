@@ -140,31 +140,84 @@ const viewAgenda = async (req, res) => {
 	
 } 
 
-// const joinEvent= async (req, res) => {
-//     try {
-        
+const joinEvent= async (req, res) => {
+    try {
+        let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
+		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
+		let thisUser = await User.findOne( {email: req.user.email}).lean()
+		let areFriends = false
+		
+		for (let friend of thisUser.contact) {
+			if (!friend.localeCompare(otherUser.email)){
+				areFriends = true
+			}
+		}	
+		
+		for (let participator of currentEvent.participators) {
+			if (!participator.localeCompare(req.user.email)) {
+				res.status(400)
+				res.send("you have already joined the event")
+			}
+		}
 
-//         let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
+		let newParticipators = currentEvent.participators
+		let newAgenda = otherUser.agenda
 
-//         if (req.user.email.localeCompare(currentEvent.sponsor)) {
-//             res.status(400)
-//             return res.send("Do not have permission to ")
-//         }
+		if (!currentEvent.privacy.localeCompare("Friends Only")) {
+			if (areFriends) {
+				newParticipators.push(req.user.email)
+				await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
 
-//         let participators = currentEvent.participators
-//         if (participators.indexof(req.params.participatorEmail) != -1) {
-//             participators.push(req.params.participatorEmail)
-//         }
+				for (let oneEvent of newAgenda) {
+					if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+						let index = newAgenda.indexOf(oneEvent)
+						newAgenda[index].participators = newParticipators
+					}
 
-//         await Event.updateOne({_id: req.params.eventId},{$set: {}})
-        
-// 		res.status(200)
-// 		return res.send("Succeed to edit event")
-// 	}catch (err) {
-// 		res.status(400)
-// 		console.log(err)
-// 	}
-// }
+					await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
+				
+					res.status(200)
+					res.send("Succeed to join the event")
+				}
+				
+			} else {
+				res.status(400)
+				res.send("you have no permission to join the event")
+			}
+		}
+
+		else if (!currentEvent.privacy.localeCompare("Public")) {
+			newParticipators.push(req.user.email)
+			await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
+
+			for (let oneEvent of newAgenda) {
+				if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+					let index = newAgenda.indexOf(oneEvent)
+					newAgenda[index].participators = newParticipators
+				}
+
+				await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
+				
+				res.status(200)
+				res.send("Succeed to join the event")
+			}
+				
+		}
+
+		else if (!currentEvent.privacy.localeCompare("Private")) {
+			res.status(400)
+			res.send("you have no permission to join the event")
+		} else {
+			res.status(400)
+			res.send("error")
+		}
+
+
+	}catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
 
 
 
@@ -173,5 +226,6 @@ module.exports = {
 	getAgenda,
 	createEvent,
     editEvent,
-	viewAgenda
+	viewAgenda,
+	joinEvent
 }
