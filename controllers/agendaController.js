@@ -161,24 +161,43 @@ const joinEvent= async (req, res) => {
 		}
 
 		let newParticipators = currentEvent.participators
-		let newAgenda = otherUser.agenda
+		
 
 		if (!currentEvent.privacy.localeCompare("Friends Only")) {
 			if (areFriends) {
 				newParticipators.push(req.user.email)
 				await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
+				currentEvent.participators = newParticipators
 
-				for (let oneEvent of newAgenda) {
-					if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
-						let index = newAgenda.indexOf(oneEvent)
-						newAgenda[index].participators = newParticipators
+
+				for (let userEmail of newParticipators) {
+					let user = await User.findOne({email: userEmail})
+					let newAgenda = user.agenda
+					let found = false
+					for (let oneEvent of newAgenda) {
+						if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+							let index = newAgenda.indexOf(oneEvent)
+							newAgenda[index].participators = newParticipators
+						}
+	
+						await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
 					}
 
-					await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
-				
-					res.status(200)
-					return res.send("Succeed to join the event")
+					if (!found) {
+						newAgenda.push(currentEvent)
+						newAgenda.sort(function(a,b){
+							let timeDiff = new Date(a.date).getTime() - new Date(b.date).getTime()
+							return timeDiff
+						});
+						await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
+					}
+
 				}
+
+				res.status(200)
+				return res.send("Succeed to join the event")
+
+				
 				
 			} else {
 				res.status(400)
@@ -189,18 +208,39 @@ const joinEvent= async (req, res) => {
 		else if (!currentEvent.privacy.localeCompare("Public")) {
 			newParticipators.push(req.user.email)
 			await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
+			currentEvent.participators = newParticipators
 
-			for (let oneEvent of newAgenda) {
-				if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
-					let index = newAgenda.indexOf(oneEvent)
-					newAgenda[index].participators = newParticipators
+			for (let userEmail of newParticipators) {
+			
+				let found = false
+				let user = await User.findOne({email: userEmail})
+				let newAgenda = user.agenda
+				
+				for (let oneEvent of newAgenda) {
+					if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+						found = true
+						let index = newAgenda.indexOf(oneEvent)
+						newAgenda[index].participators = newParticipators
+						await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
+					}
+					
+				} 
+
+				if (!found) {
+					newAgenda.push(currentEvent)
+
+					newAgenda.sort(function(a,b){
+						let timeDiff = new Date(a.date).getTime() - new Date(b.date).getTime()
+						return timeDiff
+					});
+
+					await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
 				}
 
-				await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
-				
-				res.status(200)
-				return res.send("Succeed to join the event")
 			}
+
+			res.status(200)
+			return res.send("Succeed to join the event")
 				
 		}
 
@@ -224,22 +264,37 @@ const quitEvent= async (req, res) => {
 		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
 		let newParticipators = currentEvent.participators
-		let newAgenda = otherUser.agenda
 		let index = newParticipators.indexOf(req.user.email)
 		newParticipators.splice(index, 1)
 		await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
 
-		for (let oneEvent of newAgenda) {
-			if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
-				let index = newAgenda.indexOf(oneEvent)
-				newAgenda[index].participators = newParticipators
+		for (let userEmail of currentEvent.participators) {
+			let user = await User.findOne({email: userEmail})
+			let newAgenda = user.agenda
+			
+			for (let oneEvent of newAgenda) {
+				if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+					let index = newAgenda.indexOf(oneEvent)
+					newAgenda[index].participators = newParticipators
+				}
+				
+				await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
+			
+				
 			}
-
-			await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
-		
-			res.status(200)
-			res.send("Succeed to quit the event")
 		}
+
+		let thisUser = await User.findOne({email: req.user.email})
+		thisEvent = await Event.findOne({_id: req.params.eventId}).lean()
+		newAgenda = thisUser.agenda
+		index = thisUser.agenda.indexOf(thisEvent)
+		newAgenda.splice(index, 1)
+		await User.updateOne({email: req.user.email},{$set: {agenda: newAgenda}})
+
+
+		res.status(200)
+		res.send("Succeed to quit the event")
+		
 	} catch (err) {
 		res.status(400)
 		console.log(err)
@@ -251,20 +306,27 @@ const deleteEvent= async (req, res) => {
 	try {
 		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
-		let newAgenda = otherUser.agenda
+
 		if (!currentEvent.sponsor.localeCompare(req.user.email)) {
 			await Event.deleteOne({_id: req.params.eventId})
-			for (let oneEvent of newAgenda) {
-				if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
-					let index = newAgenda.indexOf(oneEvent)
-					newAgenda.splice(index, 1)
+
+			for (let userEmail of currentEvent.participators) {
+				let user = await User.findOne({email: userEmail})
+				let newAgenda = user.agenda
+
+				for (let oneEvent of newAgenda) {
+					if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+						let index = newAgenda.indexOf(oneEvent)
+						newAgenda.splice(index, 1)
+					}
+					
+					await User.updateOne({email: userEmail},{$set: {agenda: newAgenda}})
 				}
-	
-				await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
-			
-				res.status(200)
-				return res.send("Succeed to delete the event")
 			}
+
+			res.status(200)
+			return res.send("Succeed to delete the event")
+			
 
 		} else {
 			res.status(400)
