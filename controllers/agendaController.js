@@ -156,7 +156,7 @@ const joinEvent= async (req, res) => {
 		for (let participator of currentEvent.participators) {
 			if (!participator.localeCompare(req.user.email)) {
 				res.status(400)
-				res.send("you have already joined the event")
+				return res.send("you have already joined the event")
 			}
 		}
 
@@ -177,12 +177,12 @@ const joinEvent= async (req, res) => {
 					await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
 				
 					res.status(200)
-					res.send("Succeed to join the event")
+					return res.send("Succeed to join the event")
 				}
 				
 			} else {
 				res.status(400)
-				res.send("you have no permission to join the event")
+				return res.send("you have no permission to join the event")
 			}
 		}
 
@@ -199,17 +199,17 @@ const joinEvent= async (req, res) => {
 				await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
 				
 				res.status(200)
-				res.send("Succeed to join the event")
+				return res.send("Succeed to join the event")
 			}
 				
 		}
 
 		else if (!currentEvent.privacy.localeCompare("Private")) {
 			res.status(400)
-			res.send("you have no permission to join the event")
+			return res.send("you have no permission to join the event")
 		} else {
 			res.status(400)
-			res.send("error")
+			return res.send("error")
 		}
 
 
@@ -219,6 +219,33 @@ const joinEvent= async (req, res) => {
 	}
 }
 
+const quitEvent= async (req, res) => {
+	try {
+		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
+		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
+		let newParticipators = currentEvent.participators
+		let newAgenda = otherUser.agenda
+		let index = newParticipators.indexOf(req.user.email)
+		newParticipators.splice(index, 1)
+		await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
+
+		for (let oneEvent of newAgenda) {
+			if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+				let index = newAgenda.indexOf(oneEvent)
+				newAgenda[index].participators = newParticipators
+			}
+
+			await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
+		
+			res.status(200)
+			res.send("Succeed to quit the event")
+		}
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+
+}
 
 
 // export the functions
@@ -227,5 +254,6 @@ module.exports = {
 	createEvent,
     editEvent,
 	viewAgenda,
-	joinEvent
+	joinEvent,
+	quitEvent
 }
