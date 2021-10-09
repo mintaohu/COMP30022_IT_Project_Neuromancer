@@ -4,8 +4,7 @@
   "description": "A personal CRM calender",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "test": "mocha"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
