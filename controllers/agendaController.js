@@ -68,6 +68,29 @@ const editEvent = async (req, res) => {
             privacy: req.body.privacy,
 			details: req.body.details
         }})
+
+		let user = await User.findOne({email: req.user.email})
+		let newAgenda = user.agenda
+
+		for (oneEvent of newAgenda) {
+			if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+				let index = newAgenda.indexOf(oneEvent)
+				newAgenda[index].subject = req.body.subject
+				newAgenda[index].location = req.body.subject
+				newAgenda[index].date = req.body.date
+            	newAgenda[index].privacy = req.body.privacy
+				newAgenda[index].details = req.body.details
+			}
+		}
+
+
+		newAgenda.sort(function(a,b){
+			let timeDiff = new Date(a.date).getTime() - new Date(b.date).getTime()
+			return timeDiff
+		});
+
+		await User.updateOne({email: req.user.email},{$set: {agenda: newAgenda}})
+		
 		res.status(200)
 		return res.send("Succeed to edit event")
 	}catch (err) {
