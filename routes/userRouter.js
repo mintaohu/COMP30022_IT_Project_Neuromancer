@@ -172,5 +172,7 @@ userRouter.get('/joinEvent/:eventId', agendaController.joinEvent)
 
 userRouter.get('/quitEvent/:eventId', agendaController.quitEvent)
 
+userRouter.get('/deleteEvent/:eventId', agendaController.deleteEvent)
+
 // export the router
 module.exports = userRouter

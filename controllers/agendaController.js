@@ -247,7 +247,37 @@ const quitEvent= async (req, res) => {
 
 }
 
+const deleteEvent= async (req, res) => {
+	try {
+		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
+		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
+		let newAgenda = otherUser.agenda
+		if (!currentEvent.sponsor.localeCompare(req.user.email)) {
+			await Event.deleteOne({_id: req.params.eventId})
+			for (let oneEvent of newAgenda) {
+				if (!oneEvent._id.toString().localeCompare(req.params.eventId.toString())) {
+					let index = newAgenda.indexOf(oneEvent)
+					newAgenda.splice(index, 1)
+				}
+	
+				await User.updateOne({email: otherUser.email},{$set: {agenda: newAgenda}})
+			
+				res.status(200)
+				return res.send("Succeed to delete the event")
+			}
 
+		} else {
+			res.status(400)
+			return res.send("You have no permission to delete the event")
+		}
+
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+
+
+}
 // export the functions
 module.exports = {
 	getAgenda,
@@ -255,5 +285,6 @@ module.exports = {
     editEvent,
 	viewAgenda,
 	joinEvent,
-	quitEvent
+	quitEvent,
+	deleteEvent
 }
