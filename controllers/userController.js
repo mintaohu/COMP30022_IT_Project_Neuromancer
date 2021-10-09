@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 
 const {User, UserSchema} = require('../models/user.js')
-const {FriendRequest} = require('../models/FriendRequest.js')
+const {FriendRequest} = require('../models/friendRequest.js')
 const bcrypt = require('bcrypt')
 
 
