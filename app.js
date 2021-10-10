@@ -11,8 +11,13 @@ app.use(express.static('public'))	// define where static assets live
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-var cors = require('cors');
-app.use(cors());
+const cors = require('cors');
+app.use(
+	cors({
+		origin: "http//localhost:3000",
+	})
+)
+
 
 // connect to database
 require('./models/db.js') 
@@ -25,7 +30,6 @@ const userRouter = require('./routes/userRouter.js')
 app.use('/', userRouter);
 
 app.get('/login', (req, res) => {
-	res.header("Access-Control-Allow-Origin", "*")
 	res.sendFile('./views/login.html', {root:__dirname})
 })
 
