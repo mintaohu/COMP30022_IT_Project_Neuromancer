@@ -49,13 +49,13 @@ const register = async (req, res, next) => {
 
 const getContacts =  async (req, res) => {
 	try { 
-		await User.findOne( {email: req.user.email}).lean()
+		await User.findOne( {email: req.body.email}).lean()
     } catch (err) {
         res.status(400)
         return res.send("Log in to view contacts")
     }
 
-    let thisUser = await User.findOne( {email: req.user.email}).lean()
+    let thisUser = await User.findOne( {email: req.body.email}).lean()
     let userContacts = thisUser.contact
 	let sortedContacts = new Array()
 
@@ -129,16 +129,16 @@ const editProfile = async (req, res) => {
 
 const createFriendRequest = async (req, res) => {
 	try {
-		let otherUser = await User.findOne({email: req.body.email}).lean()
+		let otherUser = await User.findOne({email: req.body.friendEmail}).lean()
 		if(otherUser == null) {
 			res.status(400)
 			return res.send("User does not exist")
 		}
 
-		let thisUser = await User.findOne({email: req.user.email}).lean()
+		let thisUser = await User.findOne({email: req.body.email}).lean()
 
 		for (friend of thisUser.contact) {
-			if (!friend.localeCompare(req.body.email)) {
+			if (!friend.localeCompare(req.body.friendEmail)) {
 				res.status(400)
 				return res.send("User is already your friend")
 			}
@@ -146,13 +146,15 @@ const createFriendRequest = async (req, res) => {
 		}
 
 		const newFriendRequest = new FriendRequest({
-			from: req.user.email,
-			to: req.body.email
+			from: req.body.email,
+			to: req.body.friendEmail,
+			type: "Friend"
 		});
 
 		await newFriendRequest.save()
 
 		res.status(200)
+		console.log("friend request sent")
 		return res.send("Succeed to send friend request")
 	} catch (err) {
 		res.status(400)
@@ -162,7 +164,7 @@ const createFriendRequest = async (req, res) => {
 
 const getFriendRequest = async (req, res) => {
 	try {
-		let friendRequestArray = await FriendRequest.find({from: req.user.email}).lean()
+		let friendRequestArray = await FriendRequest.find({to: req.body.email}).lean()
 		res.status(200)
 		return res.json(friendRequestArray)
 	} catch (err) {

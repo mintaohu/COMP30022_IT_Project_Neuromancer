@@ -7,7 +7,7 @@ const {Event} = require('../models/event.js')
 // view own agenda
 const getAgenda =  async (req, res) => {
     try {
-		let thisUser = await User.findOne( {email: req.user.email}).lean()
+		let thisUser = await User.findOne( {email: req.body.email}).lean()
 		let userAgenda = thisUser.agenda
         if (userAgenda.length > 0){
 			res.status(200)
@@ -21,6 +21,7 @@ const getAgenda =  async (req, res) => {
 
     } catch (err) {
         res.status(400)
+		console.log("Log in to view your agenda");
         return res.send("Log in to view your agenda")
     }
 }
@@ -28,18 +29,19 @@ const getAgenda =  async (req, res) => {
 const createEvent = async (req, res) => {
 	try {
 		const newEvent = new Event({
-			sponsor: req.user.email,
+			sponsor: req.body.email,
 			subject: req.body.subject,
-			location: req.body.subject,
+			location: req.body.location,
 			date: req.body.date,
-			participators: [req.user.email],
+			participators: [],
 			privacy: req.body.privacy,
-			details: req.body.details
+			details: req.body.details,
+			activity: req.body.activity
 		});
 		await newEvent.save()
-		let event = await Event.findOne({sponsor: newEvent.sponsor, subject: newEvent.subject, location: newEvent.location, date: newEvent.date, participators: newEvent.participators, privacy: newEvent.privacy, details: newEvent.details})
+		let event = await Event.findOne({sponsor: newEvent.sponsor, subject: newEvent.subject, location: newEvent.location, date: newEvent.date, participators: newEvent.participators, privacy: newEvent.privacy, details: newEvent.details, activity: newEvent.activity})
 
-		let user = await User.findOne({email: req.user.email})
+		let user = await User.findOne({email: newEvent.sponsor})
 		
 		let newAgenda = user.agenda
 
@@ -50,7 +52,7 @@ const createEvent = async (req, res) => {
 			return timeDiff
 		});
 
-		await User.updateOne({email: req.user.email},{$set: {agenda: newAgenda}})
+		await User.updateOne({email: newEvent.sponsor},{$set: {agenda: newAgenda}})
 		res.status(200)
 		return res.send("Succeed to create an event")
 	}catch (err) {

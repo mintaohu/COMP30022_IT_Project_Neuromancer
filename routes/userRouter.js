@@ -7,8 +7,9 @@ var path = require('path');
 const session = require('express-session');
 
 // Set passport js
-var Passport = require('passport').Passport
-const passport = new Passport()
+/*var Passport = require('passport').Passport
+const passport = new Passport()*/
+const passport = require('passport')
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
@@ -16,11 +17,11 @@ const bcrypt = require('bcrypt');
 
 userRouter.use(bodyParser.urlencoded({extended:true}))
 
-userRouter.use(session({
+/*userRouter.use(session({
 	secret: 'secret',
 	resave: false,
 	saveUninitialized: true
-}))
+}))*/
 
 
 
@@ -30,11 +31,11 @@ const agendaController = require('../controllers/agendaController.js')
 
 const {User} = require('../models/user.js');
 const { Console } = require('console');
-userRouter.use(passport.initialize());
-userRouter.use(passport.session());
+//userRouter.use(passport.initialize());
+//userRouter.use(passport.session());
 
 passport.serializeUser(function (user, done){
-	done(null, user.id)
+	done(null, user._id)
 })
 
 passport.deserializeUser(function (id, done){
@@ -111,8 +112,10 @@ userRouter.post('/login', function(req, res, next) {
 						status: "Online"}
 					}
 				);
-	
 				res.status(200);
+				//console.log(req.user);
+				//console.log("123");
+				console.log("Succeed to login");
 				return res.send("Succeed to login")
 			});
 	  })(req, res, next);
@@ -134,7 +137,8 @@ userRouter.get('/logout', async function (req, res) {
 	);
 
 	req.logout();
-	res.status(200)
+	res.status(200);
+	console.log("successfully logout");
     return res.send("successfully logout")
 })
 
@@ -142,9 +146,9 @@ userRouter.get('/logout', async function (req, res) {
 
 userRouter.post('/register', userController.register)
 
-userRouter.get('/getAgenda', agendaController.getAgenda)
+userRouter.post('/getAgenda', agendaController.getAgenda)
 
-userRouter.get('/getContacts', userController.getContacts)
+userRouter.post('/getContacts', userController.getContacts)
 
 userRouter.post('/resetPassword', userController.resetPassword)
 
@@ -158,7 +162,7 @@ userRouter.post('/editEvent/:eventId', agendaController.editEvent)
 
 userRouter.post('/createFriendRequest', userController.createFriendRequest)
 
-userRouter.get('/getFriendRequest', userController.getFriendRequest)
+userRouter.post('/getFriendRequest', userController.getFriendRequest)
 
 userRouter.get('/acceptFriendRequest/:friendRequestId', userController.acceptFriendRequest)
 

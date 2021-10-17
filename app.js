@@ -4,7 +4,9 @@ const express = require('express')
 const { User } = require('./models/user.js')
 const app = express()
 const methodOverride = require('method-override');
-
+const session = require('express-session')
+const flash = require("connect-flash")
+const passport = require('passport')
 app.use(express.urlencoded({ extended: true })) // replaces body-parser
 app.use(express.static('public'))	// define where static assets live
 
@@ -18,6 +20,13 @@ app.use(
 	})
 )
 
+app.use(express.static(__dirname + '/public'))
+
+// passport configuration
+app.use(session({ secret: "mysecret" }))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 // connect to database
 require('./models/db.js') 
@@ -30,7 +39,11 @@ const userRouter = require('./routes/userRouter.js')
 app.use('/', userRouter);
 
 app.get('/login', (req, res) => {
-	res.sendFile('./views/login.html', {root:__dirname})
+	res.send("succeed login");
+})
+
+app.get('/logout', (req, res) => {
+	res.send("succeed logout");
 })
 
 app.get('/register', (req, res) => {
@@ -46,7 +59,7 @@ app.get('/editProfile', (req, res) => {
 })
 
 app.get('/createEvent', (req, res) => {
-	res.sendFile('./views/createEvent.html', {root:__dirname})
+	res.send("Event created");
 })
 
 app.get('/editEvent', (req, res) => {
