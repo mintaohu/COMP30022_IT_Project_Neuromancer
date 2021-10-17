@@ -33,7 +33,7 @@ const createEvent = async (req, res) => {
 			subject: req.body.subject,
 			location: req.body.location,
 			date: req.body.date,
-			participators: [],
+			participators: [req.body.email],
 			privacy: req.body.privacy,
 			details: req.body.details,
 			activity: req.body.activity
@@ -146,7 +146,7 @@ const joinEvent= async (req, res) => {
     try {
         let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
-		let thisUser = await User.findOne( {email: req.user.email}).lean()
+		let thisUser = await User.findOne( {email: req.body.email}).lean()
 		let areFriends = false
 		
 		for (let friend of thisUser.contact) {
@@ -156,7 +156,7 @@ const joinEvent= async (req, res) => {
 		}	
 		
 		for (let participator of currentEvent.participators) {
-			if (!participator.localeCompare(req.user.email)) {
+			if (!participator.localeCompare(req.body.email)) {
 				res.status(400)
 				return res.send("you have already joined the event")
 			}
@@ -167,7 +167,7 @@ const joinEvent= async (req, res) => {
 
 		if (!currentEvent.privacy.localeCompare("Friends Only")) {
 			if (areFriends) {
-				newParticipators.push(req.user.email)
+				newParticipators.push(req.body.email)
 				await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
 				currentEvent.participators = newParticipators
 
@@ -197,6 +197,7 @@ const joinEvent= async (req, res) => {
 				}
 
 				res.status(200)
+				console.log("Joined")
 				return res.send("Succeed to join the event")
 
 				
@@ -208,7 +209,7 @@ const joinEvent= async (req, res) => {
 		}
 
 		else if (!currentEvent.privacy.localeCompare("Public")) {
-			newParticipators.push(req.user.email)
+			newParticipators.push(req.body.email)
 			await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
 			currentEvent.participators = newParticipators
 
@@ -240,7 +241,7 @@ const joinEvent= async (req, res) => {
 				}
 
 			}
-
+			console.log("joined")
 			res.status(200)
 			return res.send("Succeed to join the event")
 				
@@ -309,7 +310,7 @@ const deleteEvent= async (req, res) => {
 		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
 
-		if (!currentEvent.sponsor.localeCompare(req.user.email)) {
+		if (!currentEvent.sponsor.localeCompare(req.body.email)) {
 			await Event.deleteOne({_id: req.params.eventId})
 
 			for (let userEmail of currentEvent.participators) {
