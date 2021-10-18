@@ -221,16 +221,16 @@ const declineFriendRequest = async (req, res) => {
 
 const deleteFriend = async (req, res) => {
 	try {
-		let user = await User.findOne({email: req.user.email})
+		let user = await User.findOne({email: req.body.email})
 		let updatedContact = user.contact
 		let index = updatedContact.indexOf(req.params.email)
 		updatedContact.splice(index, 1)
 
-		await User.updateOne({email: req.user.email}, {$set: {contact: updatedContact}})
+		await User.updateOne({email: req.body.email}, {$set: {contact: updatedContact}})
 
 		let otherUser = await User.findOne({email: req.params.email})
 		let otherUpdatedContact = otherUser.contact
-		let otherIndex = otherUpdatedContact.indexOf(req.user.email)
+		let otherIndex = otherUpdatedContact.indexOf(req.body.email)
 		otherUpdatedContact.splice(otherIndex, 1)
 
 		await User.updateOne({email: req.params.email}, {$set: {contact: otherUpdatedContact}})

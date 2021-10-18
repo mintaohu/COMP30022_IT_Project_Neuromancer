@@ -170,7 +170,7 @@ userRouter.get('/acceptFriendRequest/:friendRequestId', userController.acceptFri
 
 userRouter.get('/declineFriendRequest/:friendRequestId', userController.declineFriendRequest)
 
-userRouter.get('/deleteFriend/:email', userController.deleteFriend)
+userRouter.post('/deleteFriend/:email', userController.deleteFriend)
 
 userRouter.get('/viewAgenda/:email', agendaController.viewAgenda)
 
