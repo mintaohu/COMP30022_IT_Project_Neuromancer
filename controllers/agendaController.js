@@ -61,6 +61,27 @@ const createEvent = async (req, res) => {
 	}
 }
 
+const getEvent = async (req, res) => {
+    try {
+        // get the event and its sponsor
+        let event = await Event.findOne({_id: req.params.eventId}).lean()
+
+        if (event){
+            res.status(200)
+			console.log("123")
+            return res.json(event)
+        } else {
+            res.status(400)
+            return res.send("Event not found")
+        }
+
+    } catch (error) {
+        res.status(400)
+        console.log(err)
+    }
+
+}
+
 const editEvent = async (req, res) => {
 	try {
         await Event.updateOne({_id: req.params.eventId},{$set: {
@@ -351,5 +372,6 @@ module.exports = {
 	viewAgenda,
 	joinEvent,
 	quitEvent,
-	deleteEvent
+	deleteEvent,
+	getEvent
 }

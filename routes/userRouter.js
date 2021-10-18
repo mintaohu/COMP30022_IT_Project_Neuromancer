@@ -158,6 +158,8 @@ userRouter.post('/editProfile', userController.editProfile)
 
 userRouter.post('/createEvent', agendaController.createEvent)
 
+userRouter.get('/getEvent/:eventId', agendaController.getEvent)
+
 userRouter.post('/editEvent/:eventId', agendaController.editEvent)
 
 userRouter.post('/createFriendRequest', userController.createFriendRequest)
