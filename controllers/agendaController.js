@@ -71,7 +71,7 @@ const editEvent = async (req, res) => {
 			details: req.body.details
         }})
 
-		let user = await User.findOne({email: req.user.email})
+		let user = await User.findOne({email: req.body.email})
 		let newAgenda = user.agenda
 
 		for (oneEvent of newAgenda) {
@@ -91,7 +91,7 @@ const editEvent = async (req, res) => {
 			return timeDiff
 		});
 
-		await User.updateOne({email: req.user.email},{$set: {agenda: newAgenda}})
+		await User.updateOne({email: req.body.email},{$set: {agenda: newAgenda}})
 		
 		res.status(200)
 		return res.send("Succeed to edit event")
