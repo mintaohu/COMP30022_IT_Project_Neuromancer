@@ -21,7 +21,6 @@ const getAgenda =  async (req, res) => {
 
     } catch (err) {
         res.status(400)
-		console.log("Log in to view your agenda");
         return res.send("Log in to view your agenda")
     }
 }
@@ -68,7 +67,6 @@ const getEvent = async (req, res) => {
 
         if (event){
             res.status(200)
-			console.log("123")
             return res.json(event)
         } else {
             res.status(400)
@@ -218,7 +216,6 @@ const joinEvent= async (req, res) => {
 				}
 
 				res.status(200)
-				console.log("Joined")
 				return res.send("Succeed to join the event")
 
 				
@@ -262,7 +259,6 @@ const joinEvent= async (req, res) => {
 				}
 
 			}
-			console.log("joined")
 			res.status(200)
 			return res.send("Succeed to join the event")
 				
@@ -288,7 +284,7 @@ const quitEvent= async (req, res) => {
 		let currentEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		let otherUser = await User.findOne( {email: currentEvent.sponsor}).lean()
 		let newParticipators = currentEvent.participators
-		let index = newParticipators.indexOf(req.user.email)
+		let index = newParticipators.indexOf(req.body.email)
 		newParticipators.splice(index, 1)
 		await Event.updateOne({_id: req.params.eventId},{$set: {participators: newParticipators}})
 
@@ -308,12 +304,12 @@ const quitEvent= async (req, res) => {
 			}
 		}
 
-		let thisUser = await User.findOne({email: req.user.email})
+		let thisUser = await User.findOne({email: req.body.email})
 		thisEvent = await Event.findOne({_id: req.params.eventId}).lean()
 		newAgenda = thisUser.agenda
 		index = thisUser.agenda.indexOf(thisEvent)
 		newAgenda.splice(index, 1)
-		await User.updateOne({email: req.user.email},{$set: {agenda: newAgenda}})
+		await User.updateOne({email: req.body.email},{$set: {agenda: newAgenda}})
 
 
 		res.status(200)

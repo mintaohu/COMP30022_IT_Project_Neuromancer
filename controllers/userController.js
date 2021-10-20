@@ -154,7 +154,6 @@ const createFriendRequest = async (req, res) => {
 		await newFriendRequest.save()
 
 		res.status(200)
-		console.log("friend request sent")
 		return res.send("Succeed to send friend request")
 	} catch (err) {
 		res.status(400)

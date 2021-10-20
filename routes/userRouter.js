@@ -176,7 +176,7 @@ userRouter.get('/viewAgenda/:email', agendaController.viewAgenda)
 
 userRouter.post('/joinEvent/:eventId', agendaController.joinEvent)
 
-userRouter.get('/quitEvent/:eventId', agendaController.quitEvent)
+userRouter.post('/quitEvent/:eventId', agendaController.quitEvent)
 
 userRouter.post('/deleteEvent/:eventId', agendaController.deleteEvent)
 
