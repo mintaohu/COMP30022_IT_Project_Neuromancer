@@ -38,8 +38,10 @@
 	<body>
 		<div class="login-form">
 			<h1>SeeYa Login</h1>
-			<form action="/createFriendRequest" method="POST">
-                <input type="text" name="friendEmail" placeholder="email" required>
+			<form action="/renameFriend" method="POST">
+				<input type="text" name="user" placeholder="user" required>
+				<input type="text" name="friend" placeholder="friend" required>
+                <input type="text" name="name" placeholder="name" required>
 				<input type="submit">
 			</form>
 		</div>

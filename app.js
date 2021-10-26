@@ -39,7 +39,7 @@ const userRouter = require('./routes/userRouter.js')
 app.use('/', userRouter);
 
 app.get('/login', (req, res) => {
-	res.send("succeed login");
+	res.sendFile('./views/login.html', {root:__dirname});
 })
 
 app.get('/logout', (req, res) => {
@@ -69,6 +69,11 @@ app.get('/editEvent', (req, res) => {
 app.get('/createFriendRequest', (req, res) => {
 	res.sendFile('./views/createFriendRequest.html', {root:__dirname})
 })
+
+app.get('/renameFriend', (req, res) => {
+	res.sendFile('./views/renameFriend.html', {root:__dirname})
+})
+
 
 app.all('*', (req, res) => {  // 'default' route to catch user errors
 	//res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})

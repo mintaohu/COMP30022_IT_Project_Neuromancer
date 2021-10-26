@@ -180,5 +180,9 @@ userRouter.post('/quitEvent/:eventId', agendaController.quitEvent)
 
 userRouter.post('/deleteEvent/:eventId', agendaController.deleteEvent)
 
+userRouter.post('/renameFriend', userController.renameFriend)
+
+
+
 // export the router
 module.exports = userRouter

@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 
 const {User, UserSchema} = require('../models/user.js')
+const {Alias, AliasSchema} =  require('../models/alias.js')
 const {FriendRequest} = require('../models/friendRequest.js')
 const bcrypt = require('bcrypt')
 
@@ -197,6 +198,22 @@ const acceptFriendRequest = async (req, res) => {
 		recipient.contact.push(sender.email)
 		await User.updateOne({email: sender.email},{$set: {contact: sender.contact}})
 		await User.updateOne({email: recipient.email},{$set: {contact: recipient.contact}})
+		const oneAlias = new Alias({
+			user: sender.email,
+			friend: recipient.email,
+			name: recipient.username
+		});
+
+		await oneAlias.save()
+
+		const anotherAlias = new Alias({
+			user: recipient.email,
+			friend: sender.email,
+			name: sender.username
+		});
+
+		await anotherAlias.save()
+
 		await FriendRequest.deleteOne({_id: req.params.friendRequestId})
 
 		res.status(200)
@@ -242,6 +259,27 @@ const deleteFriend = async (req, res) => {
 	}
 }
 
+const renameFriend = async (req, res) => {
+	try {
+		await Alias.updateOne({user: req.body.user, friend: req.body.friend},{$set: {name: req.body.name}})
+		res.status(200)
+		return res.send("succeed to rename friend")
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
+const getAlias =  async (req, res) => {
+	try {
+		let thisAlias = await Alias.findOne({user: req.body.user, friend: req.body.friend})
+		return res.json(thisAlias)
+	} catch (err) {
+		res.status(400)
+		console.log(err)
+	}
+}
+
 // export the functions
 module.exports = {
 	register,
@@ -253,5 +291,7 @@ module.exports = {
 	getFriendRequest,
 	acceptFriendRequest,
 	declineFriendRequest,
-	deleteFriend
+	deleteFriend,
+	renameFriend,
+	getAlias
 }
