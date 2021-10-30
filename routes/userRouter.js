@@ -182,6 +182,8 @@ userRouter.post('/deleteEvent/:eventId', agendaController.deleteEvent)
 
 userRouter.post('/renameFriend', userController.renameFriend)
 
+userRouter.post('/getAlias', userController.getAlias)
+
 
 
 // export the router
