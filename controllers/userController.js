@@ -241,7 +241,8 @@ const deleteFriend = async (req, res) => {
 		let updatedContact = user.contact
 		let index = updatedContact.indexOf(req.params.email)
 		updatedContact.splice(index, 1)
-
+		
+		
 		await User.updateOne({email: req.body.email}, {$set: {contact: updatedContact}})
 
 		let otherUser = await User.findOne({email: req.params.email})
@@ -250,6 +251,9 @@ const deleteFriend = async (req, res) => {
 		otherUpdatedContact.splice(otherIndex, 1)
 
 		await User.updateOne({email: req.params.email}, {$set: {contact: otherUpdatedContact}})
+
+		await Alias.deleteOne({email: user.email, friend: otherUser.email})
+		await Alias.deleteOne({email: otherUser.email, friend: user.email})
 
 		res.status(200)
 		return res.send("succeed to delete friend")
