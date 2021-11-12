@@ -152,7 +152,7 @@ userRouter.post('/getContacts', userController.getContacts)
 
 userRouter.post('/resetPassword', userController.resetPassword)
 
-userRouter.get('/getProfile', userController.getProfile)
+userRouter.post('/getProfile', userController.getProfile)
 
 userRouter.post('/editProfile', userController.editProfile)
 
