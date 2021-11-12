@@ -119,6 +119,7 @@ const getProfile = async (req, res) => {
 const editProfile = async (req, res) => {
 	try {
 		await User.updateOne( {email: req.body.email},{$set: {username:req.body.username, age: req.body.age, education: req.body.education, work: req.body.work, currentCity: req.body.currentCity, gender: req.body.gender}})
+
 		res.status(200)
 		return res.send("Succeed to edit profile")
 	} catch (err) {
