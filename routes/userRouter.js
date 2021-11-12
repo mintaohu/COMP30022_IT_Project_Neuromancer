@@ -99,7 +99,7 @@ userRouter.post('/login', function(req, res, next) {
 	
 				let currentUser = await User.findOne({email: req.user.email}).lean();
 				if (!currentUser.status.localeCompare("Online")) {
-					res.status(300);
+					res.status(200);
 					return res.send("User already loged in");
 				}
 				
