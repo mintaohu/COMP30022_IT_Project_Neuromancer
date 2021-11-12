@@ -129,7 +129,7 @@ userRouter.post('/login', function(req, res, next) {
 userRouter.get('/logout', async function (req, res) {
 	await User.updateOne(
 		{
-			email: req.user.email
+			email: req.body.email
 		},
 		{$set: {
 			status: "Offline"}
