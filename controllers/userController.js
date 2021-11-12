@@ -6,7 +6,6 @@ const {Alias, AliasSchema} =  require('../models/alias.js')
 const {FriendRequest} = require('../models/friendRequest.js')
 const bcrypt = require('bcrypt')
 
-
 // registering a new user
 const register = async (req, res, next) => {
 
@@ -108,7 +107,7 @@ const resetPassword =  async (req, res) => {
 
 const getProfile = async (req, res) => {
 	try {
-		let user = await User.findOne({email: req.user.email}).lean()
+		let user = await User.findOne({email: req.body.email}).lean()
 		res.status(200)
 		return res.json(user)
 	} catch (err) {
